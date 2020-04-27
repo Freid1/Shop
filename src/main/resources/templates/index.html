@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Main page</title>
+    <link type="text/css" rel="stylesheet" href="../static/cssImg/index/indexCSS.css"
+          th:href="@{/cssImg/index/indexCSS.css}"/>
+    <link type="text/css" rel="stylesheet" href="../static/cssImg/index/bar-top.css"
+          th:href="@{/cssImg/index/bar-top.css}"/>
+
+</head>
+
+<body>
+<div id="bar-top" class="bar-top">
+    <a href="/index">Main</a>
+    <a href="/webapps/index.html">Books</a>
+
+    <span class="right">
+            <a href="/registration">
+                <strong>Registration</strong>
+            </a>
+        </span>
+    <span class="right">
+            <a href="/login">
+                <strong>Sign in</strong>
+            </a>
+        </span>
+    <span class="right" th:if="${message!=null}">
+           <a href="/logout"><strong>Logout</strong></a>
+        </span>
+    <div class="clr"></div>
+</div>
+
+<br>
+
+<div sec:authorize="isAuthenticated()"> Welcome, <span sec:authentication="name">all!!!</span></div>
+
+
+<br>
+<h2>
+<p><a th:href="@{/userpage}">User Page</a></p>
+<p><a th:href="@{/adminpage}">Admin Page</a></p>
+</h2>
+<br>
+
+<p th:text="${message}"></p>
+
+<p th:if="${message!=null}"><a href="/logout">Logout</a></p>
+
+<h2 th:text="#{thead.id}">
+
+</h2>
+<h2 th:text="#{typeMismatch.customer.freePasses}">
+
+</h2>
+<h2 th:text="#{program.name}">
+
+</h2>
+<br>
+
+</body>
+</html>

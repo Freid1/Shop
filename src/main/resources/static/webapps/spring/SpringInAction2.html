@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring</title>
+    <style>
+        body {
+            background-image: url("../resources/images/daketJSBack.gif");
+            margin: 50px;
+            font-size: 25px;
+
+        }
+        pre{font-size: 20px;}
+
+    </style>
+</head>
+<body>
+<header>
+    <h1 id="js001">Часть II. Основы приложений Spring</h1>
+    <h3><a href="../index.html">Главная страница</a></h3>
+    <h3><a href="SpringInAction.html">Part 1</a></h3>
+</header>
+<nav>Содержание
+    <ol>
+        <li><a href="#basic">Глава 6. Работа с базами данных</a></li>
+
+    </ol>
+</nav>
+
+<section>
+    <h3 id="basic">Глава 6. Работа с базами данных</h3>
+    <div>
+        <p>
+            В составе Spring имеются несколько шаблонов для доступа к данным с использованием разных механизмов хранения<br>
+        <pre>
+            jca.cci.core.CciTemplate  - Соединениями JCA CCI
+            jdbc.core.JdbcTemplate    - Соединениями JDBC
+            jdbc.core.namedparam.NamedParameterJdbcTemplate - Соединениями JDBC,поддерживающими именованные параметры
+            jdbc.core.simple.SimpleJdbcTemplate             - Соединениями JDBC,поддерживающими упрощенные конструкции Java 5
+            orm.hibernate.HibernateTemplate  - Сеансами Hibernate 2.x
+            orm.hibernate3.HibernateTemplate - Сеансами Hibernate 3.x
+            orm.ibatis.SqlMapClientTemplate  - Клиентами iBATIS SqlMap
+            orm.jdo.JdoTemplate - Реализациями Java Data Object
+            orm.jpa.JpaTemplate - Диспетчерами сущностей Java Persistence API
+    </pre>
+        При использовании JDBC лучшим выбором будет JdbcTemplate <br>
+        <br>
+        Классы поддержки DAO обеспечивают удобный доступ к соответствующим шаблонам доступа к данным <br>
+       <pre>
+        ca.cci.support.CciDaoSupport     - Соединений JCA CCI
+        jdbc.core.support.JdbcDaoSupport - Соединений JDBC
+        jdbc.core.namedparam.NamedParameterJdbcDaoSupport  - Соединений JDBC,поддерживающих именованные параметры
+        jdbc.core.simple.SimpleJdbcDaoSupport - Соединений JDBC,поддерживающих упрощенные конструкции Java 5
+        orm.hibernate.support.HibernateDaoSupport  - Сеансов Hibernate 2.x
+        orm.hibernate3.support.HibernateDaoSupport - Сеансов Hibernate 3.x
+        orm.ibatis.support.SqlMapClientDaoSupport  - Клиентов iBATIS SqlMap
+        orm.jdo.support.JdoDaoSupport - Реализаций Java Data Object
+        orm.jpa.support.JpaDaoSupport - Диспетчеров сущностей Java Persistence API <br>
+       </pre>
+        Настройка источника данных<br>
+        1.источники данных, определяемые драйвером JDBC ;
+        2.источники данных, найденные посредством JNDI ;
+        3.источники данных из пулов соединений.<br>
+        <br>
+        В Spring можно настроить ссылку на источник данных, хранимый в JNDI, и внедрять ее в классы при необходимости, как если бы
+        он был обычным компонентом Spring. <br>
+        Элемент jee:jndi-lookup из пространства имен jee позволяет получить из JNDI любой объект,
+        включая источники данных, и сделать его доступным как компонент<br>
+        <pre>
+            jee:jndi-lookup id="dataSource"
+            jndi-name="/jdbc/SpitterDS"- определяет имя ресурса в JNDI
+            resource-ref="true" /      - true имя в атрибуте jndi-name будет дополнено слева приставкой java:comp/env/
+        </pre>
+        Использование пулов соединений<br>
+        Jakarta Commons Database Connection Pooling (DBCP) (http://jakarta.apache.org/commons/dbcp)<br>
+        Свойства конфигурации пула BasicDataSource<br>
+        <pre>
+        initialSize  Начальное число соединений при создании пула
+        maxActive    Максимально допустимое число одновременно открытых активных соединений.
+            Значение 0 соответствует неограниченному числу соединений
+        maxIdle      Максимально допустимое число простаивающих соединений, которые не будут закрыты.
+            Значение 0 соответствует неограниченному числу соединений
+        maxOpenPreparedStatements  Максимально допустимое количество скомпилированных запросов, которые
+            могут быть помещены в пул запросов одновременно. Значение 0 соответствует неограниченному числу запросов
+        maxWait Время ожидания пулом возврата соединения в пул(при отсутствии свободных соединений) до возбуждения
+            исключения. Значение –1 соответствует бесконечному ожиданию
+        minEvictableIdleTimeMillis Максимальное время простоя соединения, прежде чем оно может быть удалено из пула
+        minIdle Минимальное число простаивающих соединений,которые могут оставаться в пуле без создания новых соединений
+        poolPreparedStatements Признак поддержки пула скомпилированных запросов (логическое значение)
+        </pre>
+        Mysql "jdbc:mysql://localhost:3306/jdbc?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/   <br>
+        <br>
+        Простейшие источники данных , которые только можно настроить в Spring, – это те, что определены с использованием драйвера JDBC<br>
+        - DriverManagerDataSource – каждый раз, когда запрашивается соединение, возвращает новое соединение. В отличие от
+        BasicDataSource в DBCP, соединения, предоставляемые DriverManagerDataSource , не объединяются в пул.<br>
+        - SingleConnectionDataSource – каждый раз, когда запрашивается соединение, возвращает одно и то же соединение<br>
+        <br>
+        Работа с шаблонами JDBC<br>
+        Модуль JDBC в Spring освобождает от необходимости управления ресурсами и обработки исключений<br>
+        Для работы с JDBC фреймворк Spring предоставляет три класса ша-
+        блонов, на выбор:<br>
+        <pre>
+        -JdbcTemplate – самый основной шаблон JDBC, этот класс предоставляет простой доступ к базе данных через JDBC и простые
+        запросы с индексированными параметрами;
+        - NamedParameterJdbcTemplate – этот шаблон JDBC позволяет создавать запросы с именованными параметрами вместо индек-
+        сированных;
+        - SimpleJdbcTemplate – эта версия шаблона JDBC использует новые возможности Java 5, такие как автоматическая упаковка и
+        распаковка (autoboxing), шаблонные классы (generics) и списки аргументов переменной длины (varargs) для упрощения ра-
+        боты с шаблоном.
+        </pre>
+        Доступ к данным с использованием SimpleJdbcTemplate<br>
+        bean id="jdbcTemplate"<br>
+        class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate"<br>
+        constructor-arg ref="dataSource"<br>
+        Теперь можно внедрить SimleJdbcTemplate в наш объект DAO и использовать его для доступа к базе данных<br>
+        <br>
+        Объявление фабрики сеансов Hibernate<br>
+        Основным интерфейсом для взаимодействий с Hibernate является интерфейс org.hibernate.Session <br>
+        Стандартный способ получить ссылку на объект Session – обратиться к реализации интерфейса SessionFactory в Hibernate<br>
+        Получить доступ к SessionFactory в приложениях на основе Spring
+        можно через компоненты фабрики сеансов. Эти компоненты реализуют интерфейс FactoryBean фреймворка Spring,
+        который воспроизводит объекты класса SessionFactory при внедрении в свойства типа SessionFactory <br>
+        <pre>
+        bean id="sessionFactory"  class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+        property name="dataSource" ref="dataSource" /
+        property name="mappingResources"
+            list
+                valueSpitter.hbm.xml /value
+            /list
+        /property
+        property name="hibernateProperties"
+            props
+                prop key="dialect"org.hibernate.dialect.HSQLDialect/prop
+            /props        /property        /bean
+        </pre>
+        Если предпочтение будет отдано аннотациям, тогда вместо компонента LocalSessionFactoryBean
+        следует использовать компонент AnnotationSessionFactoryBean <br>
+        class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"<br>
+        <br>
+        <br>
+        <br>
+        <br>
+        </p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <a href="#top">Назад</a>
+    </div>
+
+    <h3 id="">AAA</h3>
+    <div>
+        <p>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <a href="#top">Назад</a>
+    </div>
+</section>
+</body>
+</html>
