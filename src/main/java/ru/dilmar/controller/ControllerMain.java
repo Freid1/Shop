@@ -64,15 +64,22 @@ public class ControllerMain {
             return modelAndView;
         }
 
-        User userOld = usersRepository.findByUsername(user.getUsername());
+       /* User userOld = usersRepository.findByUsernameOrEmailOrPhoneNumber(user.getUsername(),user.getEmail(),user.getPhoneNumber());
         if (userOld != null) {
             modelAndView.setViewName("registration");
-            modelAndView.addObject("message", "Пользователь с таким именем существует");
+            if (userOld.getUsername().equals(user.getUsername())) {
+                modelAndView.addObject("message", "Пользователь с таким именем существует");
+            }else if(userOld.getEmail().equals(user.getEmail())){
+                modelAndView.addObject("message", "Пользователь с такиой почтой существует");
+            } else
+            {
+                modelAndView.addObject("message", "Пользователь с таким телефонным номером существует");
+            }
             return modelAndView;
-        }
-        if (user.getPassword().length() < 5 || user.getPassword() == null) {
+        }*/
+        if (user.getPassword().length() < 3 || user.getPassword() == null) {
             modelAndView.setViewName("registration");
-            modelAndView.addObject("message", "Пароль должен содержать не менее 5 символов");
+            modelAndView.addObject("message", "typeMismatch.user.password");
             return modelAndView;
         }
         String password = user.getPassword();
@@ -85,10 +92,10 @@ public class ControllerMain {
         authGroup.setAuthgroup("USER");
         authGroupRepository.save(authGroup);
 
-        AuthGroup authGroup2 = new AuthGroup();
+     /*   AuthGroup authGroup2 = new AuthGroup();
         authGroup2.setUsername(user.getUsername());
         authGroup2.setAuthgroup("ADMIN");
-        authGroupRepository.save(authGroup2);
+        authGroupRepository.save(authGroup2);*/
 
         modelAndView.addObject("message", user.getUsername());
 

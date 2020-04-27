@@ -67,7 +67,7 @@ a:hover {
 .login {
   position: relative;
   margin: 200px auto;
-  width: 400px;
+  width: 450px;
   padding-right: 32px;
   font-weight: 300;
   color: #a8a7a8;
@@ -76,6 +76,7 @@ a:hover {
 .login p {
   margin: 0 0 10px;
 }
+
 
 input, button, label {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
