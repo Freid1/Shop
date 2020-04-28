@@ -1,17 +1,6 @@
-package ru.dilmar.property;
+package ru.dilmar.localAndMessageSource;
 
-import org.apache.tomcat.util.descriptor.LocalResolver;
-import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.web.servlet.LocaleContextResolver;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
-
-import java.util.Locale;
-
-@Configuration
+//@Configuration
 public class PropertyConfiguration {
     /*@Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfig() {

@@ -1,22 +1,18 @@
-package ru.dilmar.property;
+package ru.dilmar.localAndMessageSource;
 
-import org.springframework.beans.factory.annotation.Configurable;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-
 import java.util.Locale;
-import java.util.Properties;
 
-//@Configuration
+@Configuration
 public class ConfigLocale implements WebMvcConfigurer {
- /*   @Override
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
     }
@@ -24,8 +20,8 @@ public class ConfigLocale implements WebMvcConfigurer {
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
-        slr.setDefaultLocale(Locale.US);
-        //slr.setDefaultLocale(new Locale("ru", "RU"));
+        //slr.setDefaultLocale(Locale.US);
+        slr.setDefaultLocale(new Locale("ru", "RU"));
         return slr;
     }
 
@@ -34,5 +30,5 @@ public class ConfigLocale implements WebMvcConfigurer {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
         lci.setParamName("lang");
         return lci;
-    }*/
+    }
 }

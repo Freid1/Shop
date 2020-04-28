@@ -129,13 +129,15 @@ public class ControllerMain {
 
     @GetMapping(value = "/logout-success")
     public ModelAndView getLogoutPage(ModelAndView modelAndView) {
-        modelAndView.setViewName("logout-success");
+        //modelAndView.setViewName("logout-success");
+        modelAndView.setViewName("index");
         return modelAndView;
     }
 
     @GetMapping(value = "/login-success")
     public ModelAndView loginsuccess(ModelAndView modelAndView) {
-        modelAndView.setViewName("login-success");
+        //modelAndView.setViewName("login-success");
+        modelAndView.setViewName("index");
         return modelAndView;
     }
 

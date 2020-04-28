@@ -1,19 +1,17 @@
-package ru.dilmar.bundleSpring;
+package ru.dilmar.localAndMessageSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.Locale;
 
-@Service
-public class BundleBean {
+//@Service
+public class UseMessageSource {
 
     MessageSource messageSource;
 
     @Autowired
-    public BundleBean( MessageSource messageSource) {
+    public UseMessageSource(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 

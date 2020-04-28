@@ -16,6 +16,14 @@
 <div id="bar-top" class="bar-top">
     <a href="/index" th:text="#{page.index.bar.top.main}">Main</a>
     <a href="/guest/gallery" th:text="#{page.index.bar.top.gallery}">Gallery</a>
+
+    </span>
+    <span class="right">
+        <a th:href="${#locale.toString() eq 'ru'}?'index?lang=en':'index?lang=ru'">
+        <strong th:text="#{page.index.bar.top.lang}">Lang</strong>
+        </a>
+    </span>
+
     <span class="right">
             <a href="/registration">
                 <strong th:text="#{page.index.bar.top.registration}">Registration</strong>
@@ -37,38 +45,7 @@
 <br>
 
 <div class="chapter1" sec:authorize="isAuthenticated()"> Welcome, <span sec:authentication="name">all!!!</span></div>
-<!--<a th:href="${#locale.ROOT}">RU</a>
-<a th:href="${#locale.ENGLISH}">EN</a>
 
-<span th:text="${#locale.country}">US</span>.-->
-
-<span style="float: right">
-    <a href="?lang=US">en</a>
-    <a href="?lang=ru">ru</a>
-</span>
-
-<a th:href="${#request.contextPath}"+?lang=US>EN</a>
-<a th:href="${#request.contextPath}"+?lang=RU>RU</a>
-
-<span th:text="#{page.index.bar.top.logout}"></span>:
-<select id="locales">
-    <option value=""></option>
-    <option value="en" th:text="#{page.index.bar.top.logout}"></option>
-    <option value="ru" th:text="#{page.index.bar.top.login}"></option>
-</select>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#locales").change(function () {
-            var selectedOption = $('#locales').val();
-            if (selectedOption != ''){
-                window.location.replace('/?lang=' + selectedOption);
-
-            }
-        });
-    });
-</script>
 
 </body>
 </html>
