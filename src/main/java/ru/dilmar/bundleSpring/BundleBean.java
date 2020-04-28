@@ -9,6 +9,7 @@ import java.util.Locale;
 
 @Service
 public class BundleBean {
+
     MessageSource messageSource;
 
     @Autowired

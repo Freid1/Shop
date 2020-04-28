@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Gallery</title>
+    <style>
+        .thumb img {
+            border: 2px solid #55c5e9;
+            padding: 15px;
+            background: #666;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<p class="thumb">
+    <th:block th:each="path:${pathGalleryFoto}">
+        <a th:href="${path}">
+            <IMG th:src="${path}" width="300" height="300"/>
+        </a>
+    </th:block>
+
+</p>
+
+
+</body>
+</html>

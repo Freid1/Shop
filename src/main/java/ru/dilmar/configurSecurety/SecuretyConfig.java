@@ -64,7 +64,7 @@ public class SecuretyConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/index","/cssImg/**", "/webapps/**", "/registration").permitAll()
+                .antMatchers("/", "/index","/cssImg/**", "/webapps/**","/guest/**", "/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/login-success", true)

@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8"/>
-    <title>Main page</title>
+    <title th:text="#{page.index.bar.top.title}">Main page</title>
     <link type="text/css" rel="stylesheet" href="../static/cssImg/index/indexCSS.css"
           th:href="@{/cssImg/index/indexCSS.css}"/>
     <link type="text/css" rel="stylesheet" href="../static/cssImg/index/bar-top.css"
@@ -14,48 +14,61 @@
 
 <body>
 <div id="bar-top" class="bar-top">
-    <a href="/index">Main</a>
-    <a href="/webapps/index.html">Books</a>
-
+    <a href="/index" th:text="#{page.index.bar.top.main}">Main</a>
+    <a href="/guest/gallery" th:text="#{page.index.bar.top.gallery}">Gallery</a>
     <span class="right">
             <a href="/registration">
-                <strong>Registration</strong>
+                <strong th:text="#{page.index.bar.top.registration}">Registration</strong>
             </a>
         </span>
     <span class="right">
             <a href="/login">
-                <strong>Sign in</strong>
+                <strong th:text="#{page.index.bar.top.login}">Sign in</strong>
             </a>
         </span>
-    <span class="right" th:if="${message!=null}">
-           <a href="/logout"><strong>Logout</strong></a>
+    <span class="right" sec:authorize="isAuthenticated()">
+           <a href="/logout"><strong th:text="#{page.index.bar.top.logout}">Logout</strong></a>
         </span>
+
+    <span class="right" th:text="${message}"> </span>
     <div class="clr"></div>
 </div>
 
 <br>
 
-<div sec:authorize="isAuthenticated()"> Welcome, <span sec:authentication="name">all!!!</span></div>
+<div class="chapter1" sec:authorize="isAuthenticated()"> Welcome, <span sec:authentication="name">all!!!</span></div>
+<!--<a th:href="${#locale.ROOT}">RU</a>
+<a th:href="${#locale.ENGLISH}">EN</a>
 
+<span th:text="${#locale.country}">US</span>.-->
 
-<br>
-<h2>
-<p><a th:href="@{/userpage}">User Page</a></p>
-<p><a th:href="@{/adminpage}">Admin Page</a></p>
-</h2>
-<br>
+<span style="float: right">
+    <a href="?lang=US">en</a>
+    <a href="?lang=ru">ru</a>
+</span>
 
-<p th:text="${message}"></p>
+<a th:href="${#request.contextPath}"+?lang=US>EN</a>
+<a th:href="${#request.contextPath}"+?lang=RU>RU</a>
 
-<p th:if="${message!=null}"><a href="/logout">Logout</a></p>
+<span th:text="#{page.index.bar.top.logout}"></span>:
+<select id="locales">
+    <option value=""></option>
+    <option value="en" th:text="#{page.index.bar.top.logout}"></option>
+    <option value="ru" th:text="#{page.index.bar.top.login}"></option>
+</select>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#locales").change(function () {
+            var selectedOption = $('#locales').val();
+            if (selectedOption != ''){
+                window.location.replace('/?lang=' + selectedOption);
 
-<h2 th:text="#{thead.id}">
-
-</h2>
-<h2 th:text="#{program.name}">
-
-</h2>
-<br>
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

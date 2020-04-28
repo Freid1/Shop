@@ -55,8 +55,14 @@ public class ControllerMain {
     }
 
     @PostMapping(value = "/registration")
-    public ModelAndView registrationPost(@Valid@ModelAttribute("userForm") User user, BindingResult theBindingResult, HttpServletRequest request) {
+    public ModelAndView registrationPost(@Valid@ModelAttribute("userForm") User user, BindingResult theBindingResult, HttpServletRequest request,Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
+        if (principal != null) {
+            modelAndView.setViewName("index");
+            modelAndView.addObject("message", "Сначало разлогинтесь чтоб зарегистрироваться");
+            return modelAndView;
+        }
+
 
         if (theBindingResult.hasErrors()) {
             modelAndView.setViewName("registration");
@@ -64,7 +70,7 @@ public class ControllerMain {
             return modelAndView;
         }
 
-       /* User userOld = usersRepository.findByUsernameOrEmailOrPhoneNumber(user.getUsername(),user.getEmail(),user.getPhoneNumber());
+        User userOld = usersRepository.findByUsernameOrEmailOrPhoneNumber(user.getUsername(),user.getEmail(),user.getPhoneNumber());
         if (userOld != null) {
             modelAndView.setViewName("registration");
             if (userOld.getUsername().equals(user.getUsername())) {
@@ -76,10 +82,10 @@ public class ControllerMain {
                 modelAndView.addObject("message", "Пользователь с таким телефонным номером существует");
             }
             return modelAndView;
-        }*/
-        if (user.getPassword().length() < 3 || user.getPassword() == null) {
+        }
+        if (user.getPassword().length() < 5 || user.getPassword() == null) {
             modelAndView.setViewName("registration");
-            modelAndView.addObject("message", "typeMismatch.user.password");
+            modelAndView.addObject("message", "Пароль должен быть больше 5 и меньше 20 символов");
             return modelAndView;
         }
         String password = user.getPassword();
@@ -92,7 +98,7 @@ public class ControllerMain {
         authGroup.setAuthgroup("USER");
         authGroupRepository.save(authGroup);
 
-     /*   AuthGroup authGroup2 = new AuthGroup();
+       /* AuthGroup authGroup2 = new AuthGroup();
         authGroup2.setUsername(user.getUsername());
         authGroup2.setAuthgroup("ADMIN");
         authGroupRepository.save(authGroup2);*/
@@ -141,7 +147,7 @@ public class ControllerMain {
 
     @GetMapping(value = {"/index"})
     public ModelAndView getHomePage(ModelAndView modelAndView) {
-        modelAndView.addObject("message", "Hello");
+        modelAndView.addObject("message", "");
         modelAndView.setViewName("index");
         return modelAndView;
     }
