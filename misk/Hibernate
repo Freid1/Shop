@@ -1,0 +1,29 @@
+Connection myConn =DriverManager.getConnection(jdbcUrl, user, pass); JDBC
+Mysql
+alter table namedb.nametable auto_increment=3000 -следующее добавление в таблицу начнется с 3000 элемента
+truncate namedb.nametable -ресет таблицы до 1
+
+ALTER TABLE `hb_student_tracker`.`student`  ADD COLUMN `date_of_birth` DATETIME NULL AFTER `last_name`; добавление колонки даты в таблицу
+@Column(name="date_of_birth")
+@Temporal(TemporalType.DATE)
+private Date dateOfBirth;        Date theDateOfBirth = DateUtils.parseDate(theDateOfBirthStr);  Student temoStudent = new Student("Paully", "Doe", "paul@luv.com", theDateOfBirth);
+
+SessionFactory factory = new Configuration()
+								.configure("hibernate.cfg.xml")
+								.addAnnotatedClass(Student.class)
+								.buildSessionFactory();
+		Session session = factory.getCurrentSession();
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			session.createQuery("delete from Student where id=2").executeUpdate();
+			session.getTransaction().commit();
+
+session.createQuery("from Student s where s.lastName='Doe' OR s.firstName='Daffy'").getResultList();
+List<Student> theStudents = session.createQuery("from Student").getResultList();
+
+session = factory.getCurrentSession();
+			session.beginTransaction();
+			Student myStudent = session.get(Student.class, studentId);
+			myStudent.setFirstName("Scooby"); не надо делать сэйв
+			session.getTransaction().commit();
+
