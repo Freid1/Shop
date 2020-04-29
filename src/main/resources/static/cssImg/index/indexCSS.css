@@ -1,0 +1,16 @@
+body {
+    background-image: url("kosmos.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    color: red;
+    padding: 10px; /* Поля вокруг текста */
+}
+.chapter1{
+    text-align: center;
+    font-size: large;
+    color: burlywood;
+}
+
+

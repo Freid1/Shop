@@ -1,0 +1,63 @@
+body {
+    background-image: url("../images/daketHtml01.gif");
+   /* background-repeat: no-repeat;
+    background-attachment: fixed;*/
+    padding: 1em;
+    font-family: Georgia, Times, monospace, "Courier New";
+}
+#m001{
+
+}
+section {
+    font-family: cursive;
+    color: black;
+    font-size: large;
+    padding: inherit
+}
+nav{width: 400px;
+float: left;
+}
+section:first-letter {
+    font-size: 50px
+}
+
+#p001 {
+    color: blue;
+    opacity: 0.5;
+    text-indent: 20px;
+    border: double;
+    width: 70%;
+    box-shadow: inset 0 0 10px red;
+    border-radius: 10px/25px;
+    position: relative;
+    left: 50px;
+}
+
+footer {
+    font-size: x-large;
+    color: black;
+    padding: inherit
+}
+
+.atrebut {
+    text-decoration: underline;
+    line-height: 2em
+}
+
+#h001 {
+
+    color: darkblue;
+    letter-spacing: 2em;
+   /* position: fixed;*/
+    text-align: center;
+    font-size: 3em;
+    text-shadow: 2px 2px 7px red;
+
+}
+
+a:hover {
+    color: black
+}
+#bl{
+
+}

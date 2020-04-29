@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--debug="true" scan="true" scanPeriod="10 seconds"-->
+<configuration>
+    <!-- <include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+    <!--
+
+    <property name="HOME_LOG" value="logs/app.log"/>
+    <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+
+         <file>${HOME_LOG}</file>
+
+         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+             <fileNamePattern>logs/archived/app.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+             &lt;!&ndash; each archived file, size max 10MB &ndash;&gt;
+             <maxFileSize>10MB</maxFileSize>
+             &lt;!&ndash; total size of all archive files, if total size > 20GB, it will delete old archived file &ndash;&gt;
+             <totalSizeCap>20GB</totalSizeCap>
+             &lt;!&ndash; 60 days to keep &ndash;&gt;
+             <maxHistory>60</maxHistory>
+         </rollingPolicy>
+         <encoder>
+             <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+         </encoder>
+     </appender>-->
+    <property name="ROOT_LOG" value="logs/root.log"/>
+    <appender name="ROOT-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${ROOT_LOG}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/archived/root.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- each archived file, size max 10MB -->
+            <maxFileSize>10MB</maxFileSize>
+            <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
+            <totalSizeCap>20GB</totalSizeCap>
+            <!-- 60 days to keep -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <!--    <logger name="javax.net" level="info"/>
+            <logger name="javax.management" level="info"/>-->
+
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="ru.dilmar" level="INFO"/>
+
+    <!--  <logger name="ru.dilmar" level="INFO" additivity="false">
+          <appender-ref ref="FILE-ROLLING"/>
+          <appender-ref ref="CONSOLE"/>
+      </logger>-->
+
+
+    <root level="INFO">
+        <appender-ref ref="ROOT-ROLLING"/>
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

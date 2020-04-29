@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="#{page.index.bar.top.title}">Main page</title>
+    <link type="text/css" rel="stylesheet" href="../static/cssImg/index/indexCSS.css"
+          th:href="@{/cssImg/index/indexCSS.css}"/>
+    <link type="text/css" rel="stylesheet" href="../static/cssImg/index/bar-top.css"
+          th:href="@{/cssImg/index/bar-top.css}"/>
+
+</head>
+
+<body>
+<div id="bar-top" class="bar-top">
+    <a href="/index" th:text="#{page.index.bar.top.main}">Main</a>
+    <a href="/guest/gallery" th:text="#{page.index.bar.top.gallery}">Gallery</a>
+
+    </span>
+    <span class="right">
+        <a th:href="${#locale.toString() eq 'ru'}?'index?lang=en':'index?lang=ru'">
+        <strong th:text="#{page.index.bar.top.lang}">Lang</strong>
+        </a>
+    </span>
+
+    <span class="right">
+            <a href="/registration">
+                <strong th:text="#{page.index.bar.top.registration}">Registration</strong>
+            </a>
+        </span>
+    <span class="right">
+            <a href="/login">
+                <strong th:text="#{page.index.bar.top.login}">Sign in</strong>
+            </a>
+        </span>
+    <span class="right" sec:authorize="isAuthenticated()">
+           <a href="/logout"><strong th:text="#{page.index.bar.top.logout}">Logout</strong></a>
+        </span>
+
+    <span class="right" th:text="${message}"> </span>
+    <div class="clr"></div>
+</div>
+
+<br>
+
+<div class="chapter1" sec:authorize="isAuthenticated()"> Welcome, <span sec:authentication="name">all!!!</span></div>
+
+
+</body>
+</html>

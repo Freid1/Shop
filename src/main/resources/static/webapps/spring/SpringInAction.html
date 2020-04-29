@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring in Action</title>
+    <style>
+        body {
+            background-image: url("../resources/images/daketJSBack.gif");
+            margin: 50px;
+            font-size: 25px;
+
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <h1 id="js001">Spring</h1>
+    <h3><a href="../index.html">Главная страница</a></h3>
+    <h3><a href="SpringInAction2.html">Part 2</a></h3>
+</header>
+<nav>Содержание
+    <ol>
+        <li><a href="#in">Основы Spring</a></li>
+        <li><a href="#connect">Глава 3. Дополнительные способы связывания компонентов</a></li>
+        <li><a href="#chapter4">Глава 4. Сокращение размера XML-конфигурации Spring</a></li>
+        <li><a href="#aop">Глава 5. Аспектно ориентированный Spring</a></li>
+    </ol>
+</nav>
+
+<section>
+    <h3 id="in">Основы Spring</h3>
+    <div>
+        <p>
+            @SpringBootApplication is a composite application that combines three other
+            annotations<br>
+            @SpringBootConfiguration —Designates this class as a configuration class.
+            Although there’s not much configuration in the class yet, you can add Java-
+            based Spring Framework configuration to this class if you need to. This annota-
+            tion is, in fact, a specialized form of the @Configuration annotation.<br>
+            @EnableAutoConfiguration —Enables Spring Boot automatic configuration.
+            We’ll talk more about autoconfiguration later. For now, know that this annota-
+            tion tells Spring Boot to automatically configure any components that it thinks
+            you’ll need.<br>
+            @ComponentScan —Enables component scanning. This lets you declare other
+            classes with annotations like @Component , @Controller , @Service , and others,
+            to have Spring automatically discover them and register them as components in
+            the Spring application context.
+        </p>
+        application source code is placed under src/main/java<br>
+        test code is placed under src/test/java<br>
+        non-Java resources are placed under src/main/resources. <br>
+        <br>
+        <br>
+        Контейнер IoC отвечает за создание, настройку и сборку объектов.
+        Контейнер IoC получает информацию из XML файла и работает соответствующим образом.<br>
+        Основными задачами, выполняемыми контейнером IoC, являются:<br>
+        <br>
+        - Чтобы создать экземпляр класса приложения<br>
+        - Чтобы настроить объект<br>
+        - Чтобы собрать зависимости между объектами Существует два типа контейнеров IoC. Это:<br>
+        1.BeanFactory<br>
+        2.ApplicationContext<br>
+        <br>
+        Инъекция зависимостей (DI)<br>
+        Injection Dependency (DI) - это шаблон проектирования, который удаляет зависимость от кода программирования,
+        так что его можно легко управлять и тестировать. Dependency Injection делает наш программный код слабо
+        связанным.<br>
+        <br>
+        Структура<br>
+        Spring обеспечивает два способа вставки зависимости<br>
+        - По конструктору<br>
+        - По методу Setter<br>
+        <br>
+
+        Фреймворк Spring поддерживает несколько
+        пространств имен XML, посредством которых выполняется
+        настройка контейнера Spring:<br>
+        <br>
+        aop Предоставляет элементы для объявления аспектов и для автоматического проксирования классов, объявляемых
+        аспектами с помощью аннотации @AspectJ<br>
+        <br>
+        beans Пространство имен с основными элементами, позволяющими
+        объявлять компоненты и определять связи между ними<br>
+        <br>
+        context Содержит элементы для конфигурирования контекста
+        приложения Spring, включая возможность автоматического
+        определения и автоматического связывания компонентов,
+        а также внедрения объектов, которые не управляются
+        фреймворком Spring непосредственно<br>
+        <br>
+        jee Обеспечивает интеграцию с такими Java EE API, как JNDI и EJB<br>
+        <br>
+        jms Предоставляет элементы для объявления POJO, управляемых сообщениями<br>
+        <br>
+        lang Позволяет объявлять компоненты, реализованные как
+        сценарии на языках Groovy, JRuby и BeanShell<br>
+        <br>
+        mvc Включает такие возможности Spring MVC, как аннотирован-
+        ные контроллеры, контроллеры представлений и обработчики<br>
+        <br>
+        oxm Поддерживает возможность настройки механизма
+        отображения объектов в XML<br>
+        <br>
+        tx Содержит элементы настройки декларативных транзакций<br>
+        <br>
+        util Набор различных вспомогательных элементов, включающий
+        возможность объявления коллекций как компонентов
+        и поддержку элементов-заполнителей свойств<br>
+        <br>
+        <br>
+        bean id="duke" class="com.springinaction.springidol.Juggler" / -создание бина<br>
+        constructor-arg value="15" / -передача данных через конструктор<br>
+        <br>
+        <br>
+        Передача нескольких аргучентов через конструктор<br>
+        constructor-arg index="0" value="15"/ <br>
+        constructor-arg index="1" ref="sonata"/<br>
+        <br>
+        Класс-одиночка<br>
+        bean id="theStage" class="com.springinaction.springidol.Stage" factory-method="getInstance" /<br>
+        factory-method , позволяющий определить статический метод, который должен вызываться для создания экземпляра
+        класса<br>
+        <br>
+        bean id="ticket" class="" scope="prototype"/-Чтобы заставить фреймворк Spring создавать новый
+        экземпляр при каждом обращении<br>
+        <br>
+        Также вы можете создать свою собственную облать видимости. Ниже приведен список областей видимостей, описанных в
+        документации на момент написания урока:
+        <br>
+        singleton - По умолчанию. Spring IoC контейнер создает единственный экземпляр бина. Как правило, используется
+        для бинов без сохранения состояния(stateless)
+        <br>
+        prototype - Spring IoC контейнер создает любое количество экземпляров бина. Новый экземпляр бина создается
+        каждый раз, когда бин необходим в качестве зависимости, либо через вызов getBean(). Как правило, используется
+        для бинов с сохранением состояния(stateful)
+        <br>
+        request - Жизненный цикл экземпляра ограничен единственным HTTP запросом; для каждого нового HTTP запроса
+        создается новый экземпляр бина. Действует, только если вы используете web-aware ApplicationContext
+        <br>
+        session - Жизненный цикл экземпляра ограничен в пределах одной и той же HTTP Session. Действует, только если вы
+        используете web-aware ApplicationContext
+        <br>
+        global session - Жизненный цикл экземпляра ограничен в пределах глобальной HTTP Session(обычно при использовании
+        portlet контекста). Действует, только если вы используете web-aware ApplicationContext
+        <br>
+        application - Жизненный цикл экземпляра ограничен в пределах ServletContext. Действует, только если вы
+        используете web-aware ApplicationContext
+        <br>
+        <br>
+        Атрибут init-method определяет метод,вызываемый сразу после создания экземпляра компонента. <br>
+        Aтрибут destroy-method определяет метод, вызываемый непосредственно перед удалением компонента из
+        контейнера.<br>
+        Интерфейс InitializingBean объявляет метод
+        afterPropertiesSet(), который играет роль метода инициализации. А интерфейс DisposableBean объявляет метод
+        destroy(),
+        который вызывается перед удалением компонента из контекста приложения-недостаток состоит в образовании тесной
+        связи между
+        прикладными компонентами и Spring API. Именно по этой причине для реализации операций инициализации и
+        уничтожения компонентов я
+        рекомендую использовать атрибуты init-method и destroy-method.<br>
+        Если в файле определения контекста необходимо определить множество компонентов с методами инициализации или
+        уничтожения
+        , имеющими одинаковые имена, можно не объявлять атрибуты init-method и destroy-method для каждого отдельного
+        компонента, а
+        добавить атрибуты default-init-method и default-destroy-method в элемент. <br>
+        <br>
+        property -вызывает метод записи свойства /property name="song" value="Jingle Bells" /<br>
+        <br>
+        property name="instrument" bean class="org.springinaction.springidol.Saxophone" /
+        внутренней класс, которые определен в пределах других классов.<br>
+        <br>
+        Пространство имен p xmlns:p="http://www.springframework.org/schema/p" p:song = "Jingle Bells"-надо использовать
+        в бине а не открывать <> <br>
+        <br>
+
+
+        <p>
+        <h3>Внедрение коллекций</h3>
+        Фреймворк Spring предлагает четыре типа элементов определения коллекций<br>
+        list Связывание списка значений, допускаются повторяющиеся значения<br>
+        set Связывание множества значений, гарантирует отсутствие повторяющихся значений<br>
+        map Связывание коллекций пар имя/значение, где имя и значение могут быть значениями любых типов<br>
+        props Связывание коллекций пар имя/значение, где имя и значение должны имеет строковый тип (String) <br>
+        /list/ or /set/<br>
+        /ref bean="guitar" / <br>
+        /ref bean="cymbal" / <br>
+        /list/ or /set/<br>
+        Элемент list может применяться к свойствам, которые могут быть любыми реализациями java.util.Collection или
+        массивом <br>
+        <br>
+        /map/<br>
+        /entry key="GUITAR" value-ref="guitar" /<br>
+        /entry key="CYMBAL" value-ref="cymbal" /<br>
+        /map/<br>
+        <br>
+        key Определяет ключ элемента отображения как строку<br>
+        key-ref Определяет ключ элемента отображения как ссылку на компонент в контексте Spring<br>
+        value Определяет значение элемента отображения как строку<br>
+        value-ref Определяет значение элемента отображения как ссылку на компонент в контексте Spring <br>
+        <br>
+        /props/<br>
+        /prop key="GUITAR">STRUM STRUM STRUM /prop/<br>
+        /prop key="CYMBAL">CRASH CRASH CRASH /prop/<br>
+        /props/<br>
+        <br>
+        /property/ – это элемент для внедрения значения или ссылки на компонент в «обычное» свойство компонента;<br>
+        /props/ – это элемент для определения коллекций типа java.util.Properties ;<br>
+        /prop/ – это элемент для определения члена коллекции /props/ <br>
+        <br>
+        Чтобы присвоить свойству значение null , достаточно просто вос пользоваться элементом /null/ /property
+        name="some"/ /null/ /property/<br>
+        <br>
+        </p>
+        <p>
+        <h3>Внедрение выражений Spring Expression Language, SpEL</h3>
+        Конструкция #{} подсказывает фреймворку Spring, что ее содер-
+        жимое является выражением на языке SpEL. Эти выражения можно
+        также смешивать с обычными значениями <br>
+        property name="message" value="The value is #{5}" or #{89.7} or #{1e4} or #{'Chuck'} or #{"Chuck"} or #{false}/
+        <br>
+        <br>
+        Ссылки на компоненты и обращение к их свойствам и методам <br>
+        property name="instrument" value="#{saxophone}"/ equels property name="instrument" ref="saxophone"<br>
+        property name="song" value="#{kenny.song}" /( равносильно setSong(kenny.getSong())<br>
+        или value="#{songSelector.selectSong().toUpperCase()}" <br>
+        <br>
+        Чтобы избежать появления жуткого исключения NullPointerException в выражении, следует задействовать защищенный
+        оператор
+        доступа к свойству (?)<br>
+        property name="song" value="#{songSelector.selectSong()?.toUpperCase()}"-Здесь вместо одиночной точки ( . ) для
+        вызова метода toUpperCase()
+        используется оператор ?. <br>
+        Этот оператор сначала проверяет, не является ли пустым элемент слева, и только потом выполняет обращение к
+        элементу справа<br>
+        <br>
+        Ключом к использованию методов класса и констант в языке
+        SpEL является оператор T()(T(java.lang.Math))<br>
+        property name="multiplier" value="#{T(java.lang.Math).PI}" or value="#{T(java.lang.Math).random()}" <br>
+        <br>
+        Язык SpEL включает несколько операторов для манипулирования значениями в выражениях<br>
+        Арифметические +, -, *, /, %, ^<br>
+        Операторы отношений <, >, ==, <=, >=, lt, gt, eq, le, ge<br>
+        Логические and, or, not, !<br>
+        Условные ?: (трехместный), ?: (Элвис)<br>
+        Регулярные выражения matches<br>
+        <br>
+        Язык SpEL поддерживает все основные арифметические опера-
+        торы, имеющиеся в языке Java, плюс оператор «крышки» ( ^ ), вы-
+        полняющий возведение в степень #{counter.total ^ 42}<br>
+        <br>
+        оператор + перегружен и способен выполнять конкатенацию строковых значений<br>
+        <br>
+        К сожалению, операторы «меньше чем» и «больше чем» могут
+        вызывать проблемы при использовании в конфигурационных XML-
+        файлах, так как в языке разметки XML они имеют специальное
+        значение.<br>
+        #{counter.total le 100000} le означает «меньше или равно»<br>
+        <br>
+        Равно == eq<br>
+        Меньше чем < lt<br>
+        Меньше или равно <= le<br>
+        Больше чем > gt<br>
+        Больше или равно >= ge<br>
+        <br>
+        Условные вычисления <br>
+        трехместный (тернарный) оператор ( ?: ) #{songSelector.selectSong()=='Jingle Bells'?piano:saxophone}<br>
+        <br>
+        #{kenny.song != null ? kenny.song : 'Greensleeves'}<br>
+        <br>
+        Это выражение построено правильно, но в нем имеется повторяющийся элемент – ссылка на свойство kenny.song .
+        Язык SpEL предлагает разновидность трехместного оператора, упрощающую подобные выражения<br>
+        property name="song" value="#{kenny.song ?: 'Greensleeves'}<br>
+        <br>
+        Обработка коллекций на языке SpEL<br>
+        /util:list id="cities"
+        bean class="com.habuma.spel.cities.City"
+        p:name="Chicago" p:state="IL" p:population="2853114"/
+        bean class="com.habuma.spel.cities.City"
+        p:name="Atlanta" p:state="GA" p:population="537958"/
+        /util:list/ <br>
+        <br>
+        Элемент util:list определен в пространстве имен util фрейм-
+        ворка Spring. Фактически он создает компонент типа java.util.List ,
+        содержащий все значения или компоненты, перечисленные в нем<br>
+        <br>
+        Доступ к элементам коллекции<br>
+        property name="chosenCity" value="#{cities[2]}" or #{cities[T(java.lang.Math).random() * cities.size()]} or
+        #{cities['Dallas']}<br>
+        <br>
+        util:properties id="settings" location="classpath:settings.properties"<br>
+        Здесь компонент settings будет иметь тип java.util.Properties и содержать все элементы, имеющиеся в файле, с
+        именами settings.properties . <br>
+        property name="accessToken" value="#{settings['twitter.accessToken']} <br>
+        <br>
+        Помимо чтения свойств из коллекции util:properties , фреймворк Spring обеспечивает доступ в SpEL к двум
+        специальным
+        свойствам: systemEnvironment и systemProperties .Свойство systemEnvironment содержит все переменные окружения
+        системы, в которой выполняется приложение. Это обычная коллекция типа java.util.Properties , поэтому для доступа
+        к ее элементам по
+        ключам можно использовать квадратные скобки<br>
+        #{systemEnvironment['HOME']}<br>
+        Свойство systemProperties , в свою очередь, содержит все параметры, которые были установлены при запуске
+        приложения <br>
+        <br>
+        Стоит также отметить, хотя это и не имеет прямого отношения к работе с коллекциями, что оператор [] можно
+        применять
+        к строковым значениям для извлечения одиночных символов. Например, следующее выражение вернет "s" : 'This is a
+        test'[3]<br>
+        <br>
+        Выборка элементов коллекций<br>
+        SpEL предлагает более простое решение – оператор выборки ( .?[] ), как показано ниже<br>
+        property name="bigCities" value="#{cities.?[population gt 100000]}<br>
+        В языке SpEL имеются также другие операторы выборки, .^[] и
+        .$[] , позволяющие получить первый и последний (соответственно)
+        элементы в выборке из коллекции.<br>
+        <br>
+        Отображение коллекций<br>
+        Отображение коллекций связано с выбором определенного свой-
+        ства каждого элемента оригинальной коллекции и помещением его
+        в новую коллекцию. Оператор отображения ( .![] ) в языке SpEL вы-
+        полняет именно эту операцию.<br>
+        value="#{cities.![name]}"-получить список строк с именами городов <br>
+        value="#{cities.?[population gt 100000].![name + ', ' + state]}" -объединение выборки<br>
+        <br>
+        </p>
+        <a href="#top">Назад</a>
+    </div>
+    <h3 id="connect">Глава 3. Дополнительные способы связывания компонентов</h3>
+    <div>
+        <p>
+        <h3>Объявление родителей и потомков компонентов</h3>
+        Для обеспечения «наследования» определений компонентов в элементе bean могут указываться два специальных
+        атрибута:<br>
+        - parent – определяет идентификатор компонента, который будет предком компонента с атрибутом parent . Атрибут
+        parent
+        указывает, что компонент расширяет Java-класс;<br>
+        - abstract – если имеет значение true , указывает, что компонент
+        объявлен как абстрактный. То есть экземпляр такого компонента никогда не должен создаваться фреймворком
+        Spring.<br>
+        <br>
+        id="baseSaxophonist" class="com.springinaction.springidol.Instrumentalist" abstract="true"<br>
+        bean id="kenny" parent="baseSaxophonist" -наследуют одни и теже свойства<br>
+        bean id="david" parent="baseSaxophonist"<br>
+        <br>
+        Переопределение наследуемых свойств просто добавить проперти<br>
+        <br>
+        Общие абстрактные свойства<br>
+        bean id="basePerformer" abstract="true" property name="song" value="Somewhere Over the Rainbow"<br>
+        Компонент basePerformer объявляет общее свойство song , которое
+        унаследуют два наших исполнителя. Но обратите внимание на отсутствие в нем атрибута class .<br>
+        bean id="taylor" class="com.springinaction.springidol.Vocalist" parent="basePerformer"<br>
+        <br>
+        <b>Внедрение методов</b> <br>
+        Фреймворк Spring поддерживает две формы внедрения методов:<br>
+        замещение метода – позволяет во время выполнения замес-
+        тить существующий метод (абстрактный или конкретный)
+        новой реализацией;<br>
+        внедрение метода чтения – позволяет во время выполнения
+        заместить существующий метод (абстрактный или конкрет-
+        ный) новой реализацией, возвращающей определенный ком-
+        понент из контекста Spring.<br>
+        <br>
+        <b>Основы замещения методов</b><br>
+        bean id="magicBox"<br>
+        class="com.springinaction.springidol.MagicBoxImpl"<br>
+        <em>replaced-method name="getContents" replacer="tigerReplacer"</em> /bean<br>
+        <br>
+        Атрибут name указывает имя замещаемого метода getContents() . А атрибут replacer
+        ссылается на компонент tigerReplacer , реализующий замену<br>
+        <br>
+        bean id="tiger" class="SpringInAction.Exmpl2.TigerReplacer"-создаем бин с классом implements MethodReplacer
+        который позволяет
+        одменять метод в объекте<br>
+        public class TigerReplacer implements MethodReplacer<br>
+        <br>
+        <b>Использование внедрения методов чтения</b><br>
+        Внедрение через метод чтения – это особый случай внедрения методов, когда объявляется метод
+        (обычно абстрактный), возвращающий компонент определенного типа, но фактически возвращаемый
+        компонент определяется в контексте Spring.<br>
+        <br>
+        public abstract Instrument getInstrument(); <br>
+        getInstrument() –абстрактный метод, тогда возникает вопрос, как этот метод получит реализацию.
+        Один из возможных подходов – использовать прием замещения методов, как описано выше.
+        Но для этого придется написать класс, реализующий интерфейс MethodReplacer <br>
+        <br>
+        Для поддержки внедрения методов чтения фреймворк Spring
+        предлагает элемент lookup-method . Как и replaced-method , элемент
+        lookup-method замещает существующий метод новой реализацией во
+        время выполнения. Но элемент lookup-method – это упрощенный
+        вариант элемента replaced-method , для которого нужно определить
+        компонент в контексте Spring, возвращающий замещающий метод.
+        Элемент lookup-method этого не требует.<br>
+        <br>
+        lookup-method name="getInstrument" bean="guitar"<br>
+        <br>
+        Сам по себе прием внедрения методов чтения является всего лишь
+        разновидностью внедрения через методы записи. Однако это имеет
+        значение, только когда компонент имеет область действия prototype <br>
+        <br>
+        bean id="guitar" class="com.springinaction.springidol.Guitar" scope="prototype" <br>
+        <br>
+        Следует также отметить, что даже при том, что прием внедрения
+        методов позволяет замещать их реализации, нет никакой возмож-
+        ности изменить сигнатуру метода. Типы параметров и возвращае-
+        мого значения должны оставаться такими, какие они есть. В случае
+        с элементом lookup-method это означает, что атрибут bean должен
+        ссылаться на компонент, тип которого совместим с типом значения,
+        возвращаемого методом<br>
+        <br>
+        <b>Внедрение не-Spring компонентов</b><br>
+        Аннотация @Configurable играет двоякую роль: <br>
+        - во-первых, она показывает, что экземпляр класса Instrumentalist
+        может быть сконфигурирован фреймворком Spring, даже при
+        создании за его пределами; <br>
+        - она также связывает класс Instrumentalist и компонент с иден-
+        тификатором pianist . При настройке экземпляра класса Instru-
+        mentalist фреймворк Spring будет использовать определение
+        компонента pianist как шаблон.<br>
+        <br>
+        Пользовательские редакторы свойств<br>
+        property name="wsdlDocumentUrl" value="http://www.xmethods.net/sd/BabelFishService.wsdl"<br>
+        За кулисами фреймворк Spring преобразует строковое значение в объект URL <br>
+        Интерфейс java.beans.PropertyEditor позволяет определять, как значения типа String должны отображаться
+        в значения других типов. Удобная реализация этого интерфейса,
+        java.beans.PropertyEditorSupport , имеет два метода, интересующие нас:<br>
+        - getAsText() возвращает строковое представление значения свойства;<br>
+        - setAsText(String value) присваивает свойству компонента значение, переданное в виде строки.<br>
+        <br>
+        В состав Spring входят несколько собственных редакторов свойств, которые автоматически преобразуют
+        внедряемые строковые значения в более сложные типы<br>
+        <br>
+        ClassEditor <br>
+        Устанавливает свойство типа java.lang.Class на основе строки, содержащей полное имя класса<br>
+        CustomDateEditor <br>
+        Устанавливает свойство типа java.util.Date на основе строки и с использованием пользовательского объекта
+        java.text.DateFormat <br>
+        FileEditor<br>
+        Устанавливает свойство типа java.io.File на основе строки, содержащей полный путь к файлу <br>
+        LocaleEditor <br>
+        Устанавливает свойство типа java.util.Locale на основе строки, содержащей текстовое представлениелокали
+        (например, en_US)<br>
+        StringArrayPropertyEditor <br>
+        Преобразует строку с подстроками, разделенными запятыми, в массив строк<br>
+        StringTrimmerEditor<br>
+        Автоматически отсекает пробелы у строковых свойств. Пустые строки могут быть преобразованы в значение null<br>
+        URLEditor<br>
+        Устанавливает свойство типа java.net.URL на основе строки, содержащей адрес URL<br>
+        Mожно написать собственный редактор, расширяя класс PropertyEditorSupport<br>
+        <br>
+        <b>Специальные компоненты Spring</b><br>
+        Spring предлагает две возможности включиться в управление жизненным циклом компонента и просмотреть
+        или изменить его конфигурацию. Это называетсяпост обработкой .<br>
+        Интерфейс BeanPostProcessor предоставляет две возможности изменить компонент после его создания и
+        связывания:<br>
+        <br>
+        Если приложение выполняется в рамках фабрики компонентов,
+        каждый постпроцессор BeanPostProcessor придется регистрировать
+        программно, с помощью метода addBeanPostProcessor() фабрики:<br>
+        BeanPostProcessor fuddifier = new Fuddifier();<br>
+        factory.addBeanPostProcessor(fuddifier);<br>
+        <br>
+        Реализация интерфейса BeanPostProcessor выполняет постобработку
+        компонента после его загрузки, тогда как реализация интерфейса BeanFactoryPostProcessor
+        выполняет постобработку всего контейнера Spring.<br>
+        <br>
+        <b>Внешние файлы с настройкамисвойств</b><br>
+        Чтобы сообщить фреймворку Spring о необходимости загружать конфигурацию из внешнего файла свойств, можно
+        воспользоваться классом
+        PropertyPlaceholderConfigurer . Для этого необходимо настроить следующий компонент в файле связывания
+        компонентов<br>
+        <br>
+        bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"<br>
+        property name="location" value="jdbc.properties" /<br>
+        <br>
+        Свойство location позволяет работать с одним файлом свойств.
+        Если потребуется разбить конфигурацию свойств на несколько файлов, следует использовать свойство locations <br>
+        property name="locations"<br>
+        list<br>
+        valuejdbc.properties/value<br>
+        valuesecurity.properties/value<br>
+        valueapplication.properties/value<br>
+        /list<br>
+        /property<br>
+        <br>
+        Теперь можно заменить жестко определенные значения в файле с описанием компонентов соответствующими переменными.
+        Синтаксически переменные записываются в форме ${variable}<br>
+        bean id="dataSource"<br>
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource"<br>
+        property name="url" value="${database.url}" /<br>
+        property name="driverClassName"<br>
+        value="${database.driver}" /<br>
+        property name="username"<br>
+        value="${database.user}" /<br>
+        property name="password"<br>
+        value="${database.password}" /<br>
+        /bean<br>
+        <br>
+        Класс PropertyPlaceholderConfigurer удобно использовать для выделения части настроек в отдельный файл
+        свойств.<br>
+        <br>
+        Поддержка параметризации и интернационализации сообщений
+        в Java позволяет определить один или несколько файлов с описаниями
+        свойств, содержащими текст для отображения в приложении.
+        Вместе с файлами свойств, содержащими сообщения на других языках,
+        в приложении всегда должен иметься файл с сообщениями, используемый по умолчанию<br>
+        Контекст приложения Spring поддерживает параметризацию сообщений, обеспечивая доступ к ним через интерфейс
+        MessageSource <br>
+        <br>
+        В состав фреймворка Spring входит готовая к использованию реа-
+        лизация интерфейса MessageSource . Класс ResourceBundleMessageSource
+        просто извлекает сообщения, используя для этого уже имеющийся
+        в Java класс java.util.ResourceBundle . Чтобы воспользоваться классом
+        ResourceBundleMessageSource , надо добавить следующее определение
+        компонента<br>
+        <br>
+        bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"<br>
+        property name="basename" value trainingtext/value<br>
+        /property<br>
+        /bean<br>
+        <br>
+        Locale locale = ... ; // определить языковые настройки<br>
+        String text = context.getMessage("computer", new Object[0], locale);<br>
+        <br>
+        Очень важно, чтобы данный компонент назывался именно message Source , потому
+        что ApplicationContext будет искать его по имени, при
+        настройке внутреннего источника сообщений. Зато вам не придется явно внедрять
+        компонент messageSource в компоненты приложения. Вместо этого вы получите доступ к сообщениям через метод
+        getMessage() контекста приложения ApplicationContext <br>
+        <br>
+        <b>Уменьшение связности с использованием событий ст.155</b><br>
+        Прием событий<br>
+        Класса org.springframework.context.ApplicationEvent события:<br>
+        - ContextClosedEvent – генерируется при закрытии контекста приложения;<br>
+        - ContextRefreshedEvent – генерируется после инициализации или обновления контекста приложения;<br>
+        - RequestHandledEvent – генерируется в контексте веб-приложения после обработки запроса.<br>
+        <br>
+        implements ApplicationListener public void onApplicationEvent(ContextStoppedEvent event) or StartEvent <br>
+        <bean id="myStartEventHandler" class="net.proselyte.eventhandling.MyStartEventHander"/>
+        <br>
+        context.start(); <br>
+        <br>
+        <b>Компоненты, управляемые сценариями</b><br>
+        private Lime lime; в классе устанавливаем приватный интерфейс с метом потом внедряем скрипт и реализуем метод
+        интерфейса<br>
+        property name="lime" ref="lime" /<br>
+        Внедрение объекта Lime на языке Ruby выполняется с помощью элемента lang:jruby<br>
+        lang:jruby id="lime"<br>
+        script-source="classpath:com/springinaction/scripting/Lime.rb"<br>
+        script-interfaces="com.springinaction.scripting.Lime" /<br>
+        <br>
+        lang:groovy id="lime" script-source="classpath:com/springinaction/scripting/Lime.groovy" /<br>
+        <br>
+        язык BeanShell имитирует синтаксис языка Java<br>
+        lang:bsh id="lime"<br>
+        script-source="classpath:com/springinaction/scripting/Lime.bsh"<br>
+        script-interfaces="com.springinaction.scripting.Lime" /<br>
+        <br>
+        Обновление компонентов,управляемых сценариями<br>
+        Одним из основных преимуществ использования сценариев, вместо статически компилируемого программного кода на
+        языке Java,
+        является возможность их изменения без необходимости повторно разворачивать приложение<br>
+        Все элементы настройки компонентов, управляемых сценариями, имеют атрибут refresh-check-delay ,
+        позволяющий определить, как часто (в милисекундах) сценарий должен обновляться фреймворком.<br>
+        По умолчанию атрибут refresh-check-delay имеет значение –1, что означает запрет на обновление<br>
+        <br>
+        <br>
+        Создание компонентов, управляемых сценариями, непосредственно в конфигурации<br>
+        lang:bsh id="lime"
+        script-interfaces="com.springinaction.scripting.Lime"
+        lang:inline-script ![CDATA[
+        void drink() {
+        System.out.println("Called the doctor woke him up!");
+        }
+        ]]
+        /lang:inline-script
+        /lang:bsh<br>
+        Отметьте, что здесь программный код сценария заключен в элемент ![CDATA[…]]<br>
+        </p>
+        <br>
+        <a href="#top">Назад</a>
+    </div>
+    <h3 id="chapter4">Глава 4. Сокращение размера XML-конфигурации Spring</h3>
+    <div>
+        <p>
+            <b>Четыре типа автоматического связывания</b>
+            - byName – пытается отыскать компонент в контейнере, чье имя совпадает с именем связываемого свойства.
+            Если соответствующий компонент не найден, свойство останется несвязанным.<br>
+            - byType – пытается отыскать единственный компонент в контейнере, чей тип соответствует типу связываемого
+            свойства.
+            Если соответствующий компонент не найден, свойство не будет связано.<br>
+            - constructor – пытается сопоставить конструктор компонента,куда выполняется внедрение, с компонентами, чьи
+            типы совпадают с аргументами конструктора.<br>
+            - autodetect – сначала пытается выполнить автоматическое связывание через конструктор, а затем по типу.<br>
+            <br>
+            id="kenny" class="" autowire="byName"- ищет одинаковое имя в xml бин <br>
+            <br>
+            Чтобы устранить неоднозначность при использовании автоматического связывания по типу, Spring предлагает два
+            решения: либо
+            определить основного кандидата для автоматического связывания,
+            либо исключить компоненты из списка кандидатов на автоматическое связывание.<br>
+            Чтобы определить основного кандидата для автоматического связывания, в элемент bean определения компонента
+            необходимо добавить атрибут primary .<br>
+            Но самое неприятное, что атрибут primary получает значение true
+            по умолчанию,То есть при использовании решения на основе атрибута primary необходимо присвоить ему значение
+            false во всех остальных компонентах<br>
+            <br>
+            Если компонент настроен на внедрение зависимостей через конструктор, можно просто убрать элементы
+            constructor-arg
+            из его объявления и позволить фреймворку автоматически выбрать аргументы для передачи конструктору из
+            компонентов,
+            имеющихся в контексте Spring<br>
+            <br>
+            Если вы вдруг обнаружите, что вам придется добавить один и тот же атрибут autowire во все компоненты<br>
+            Для этого в корневой элемент beans следует добавить атрибут default-autowire <br>
+            <br>
+            Смешивание автоматического и явного связывания<br>
+            <br>
+            <b>Связывание посредством аннотаций</b><br>
+            Поддержка автоматического связывания посредством аннотаций по умолчанию отключена. Поэтому, прежде чем
+            использовать этот способ,
+            необходимо включить его поддержку в конфигурационном файле context:annotation-config<br>
+            <br>
+            В Spring 3 поддерживаются несколько аннотаций для автоматического связывания: <br>
+            - аннотация @Autowired , определяемая самим фреймворком Spring; <br>
+            - аннотация @Inject из JSR-330; <br>
+            - аннотация @Resource из JSR-250.<br>
+            <br>
+            Самая интересная особенность аннотации @Autowired состоит в том, что ее необязательно применять к методу
+            записи.
+            Эту аннотацию можно применить к любому методу, чтобы обеспечить автоматическое внедрение ссылки на компонент<br>
+            <br>
+            Необязательное автоматическое связывание установив атрибут required аннотации @Autowired в значение false
+            <br>
+            <br>
+            Чтобы помочь аннотации @Autowired выбрать требуемый компонент, можно добавить аннотацию @Qualifier<br>
+            @Autowired<br>
+            @Qualifier("guitar")<br>
+            <br>
+            Создание собственных квалификаторов<br>
+            @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})<br>
+            @Retention(RetentionPolicy.RUNTIME)<br>
+            @Qualifier<br>
+            public @interface StringedInstrument {}<br>
+            <br>
+            Когда фреймворк попытается выполнить автоматическое связывание свойства instrument ,
+            его выбор сузится от всех компонентов типа Instrument до тех из них, что отмечены аннотацией
+            @StringedInstrument .
+            Пока в приложении остается единственный компонент с аннотацией @StringedInstrument , он будет внедрен в
+            свойство instrument<br>
+            <br>
+            Автоматическое связывание с применением стандартной аннотаци @Inject <br>
+            Эта аннотация является практически полным аналогом аннотации @Autowired фреймворка Spring<br>
+            Аннотация @Inject тоже может сопровождаться уточняющей аннотацией @Named, подобной аннотации @Qualifier
+            (@Named("guitar")-ссылка) <br>
+            <br>
+            Помимо внедрения ссылок на компоненты с помощью аннотаций автоматического связывания,
+            может появиться желание использовать аннотации для внедрения простых значений<br>
+            @Value("Eruption")<br>
+            private String song;<br>
+            <br>
+            Как оказывается, внедрение простых значений не является коньком аннотации @Value . Полная ее мощь
+            заключается в возможности
+            использовать выражения на языке SpEL.<br>
+            @Value("#{systemProperties.myFavoriteSong}") <br>
+            private String song;<br>
+            <br>
+            Автоматическое определение компонентов<br>
+            Но у фреймворка Spring есть в запасе еще одна хитрость. Элемент context:component-scan делает все то же, что
+            и элемент
+            context:annotation-config, плюс он настраивает фреймворк на автоматическое определение компонентов и их
+            объявление<br>
+            Аннотирование компонентов для автоматического определения <br>
+            <br>
+            По умолчанию элемент context:component-scan требует выполнить поиск классов, отмеченных одной из нескольких
+            специальных аннотаций:<br>
+            - @Component – универсальная аннотация, указывающая, что класс является компонентом Spring;<br>
+            - @Controller – указывает, что класс определяет контроллер Spring MVC;<br>
+            - @Repository – указывает, что класс определяет репозиторий данных;<br>
+            - @Service – указывает, что класс определяет службу;<br>
+            - любая пользовательская аннотация, определенная с помощью аннотации @Component <br>
+            <br>
+            Дополнительные настройки процедуры поиска можно выполнить,добавляя элементы context:include-filter
+            и context:excludefilter в context:component-scan <br>
+            context:include-filter type="assignable" expression="com.springinaction.springidol.Instrument" <br>
+            <br>
+            Поиск компонентов можно настраивать,используя любой из пяти типов фильтров <br>
+            - annotation Отыскивает классы, отмеченные указанной аннотацией на уровне типа. Аннотация определяется
+            атрибутом expression<br>
+            - assignable Отыскивает классы, экземпляры которого могут присваиваться свойствам указанного типа. Тип
+            свойств определяется атрибутом expression<br>
+            - aspectj Отыскивает классы, тип которых соответствует выражению типа AspectJ, указанному в атрибуте
+            expression<br>
+            - custom Использует пользовательскую реализацию org.springframework core.type.TypeFilter, указанную в
+            атрибуте expression <br>
+            - regex Отыскивает классы, имена которых соответствуют регулярному выражению, указанному в атрибуте
+            expression<br>
+            <br>
+            <br>
+            Конфигурирование Spring в программном коде на Java<br>
+            Аннотация @Configuration подсказывает фреймворку Spring, что
+            данный класс содержит одно или более определений компонентов. Объявления компонентов – это обычные методы,
+            отмеченные
+            аннотацией @Bean<br>
+            @Bean<br>
+            public Performer duke() {<br>
+            return new Juggler(); }<br>
+            В данном случае объявление компонента выглядит очень просто.
+            Метод просто создает и возвращает экземпляр класса Juggler . Этот
+            объект будет зарегистрирован фреймворком Spring в контексте приложения с идентификатором duke<br>
+            AnnotationConfigApplicationContext(XmlAnalog.class)-создаем контекст при помощи<br>
+        </p>
+        <br>
+        <a href="#top">Назад</a>
+    </div>
+
+    <h3 id="aop">Глава 5. Аспектно ориентированный Spring</h3>
+    <p>
+        <p>
+            Аспекты Spring могут работать с пятью типами советов:<br>
+            - до – работа выполняется перед вызовом метода ;<br>
+            - после – работа выполняется после вызова метода, независимо от результата ;<br>
+            - после успешного вызова – работа выполняется после вызова метода, если его выполнение завершилось успешно ;<br>
+            - после исключения – работа выполняется после того, как вызванный метод возбудит исключение ;<br>
+            - вокруг – аспект обертывает метод, обеспечивая выполнение некоторых операций до и после вызова метода .<br>
+            <br>
+            Вплетение может происходить в разные моменты жизненного цикла целевого объекта.<br>
+            - Во время компиляции – аспекты вплетаются в целевой объект, когда тот компилируется. Это требует
+            специального компилятора,
+            такого как AspectJ, вплетающего аспекты на этапе компиляции.<br>
+            - Во время загрузки класса – вплетение аспектов выполняется в процессе загрузки целевого класса виртуальной
+            машиной JVM.
+            Это требует специального загрузчика, который дополняет байт-код целевого класса перед внедрением его в
+            приложение, например
+            механизм load-time weaving (LTW) в AspectJ <br>
+            - Во время выполнения – вплетение аспектов производится во время выполнения приложения. В этом случае
+            контейнер AOP
+            обычно динамически генерирует объект с вплетенным аспектом, представляющий целевой объект.<br>
+            <br>
+            Три доминирующих фреймворка AOP :<br>
+            - AspectJ (http://eclipse.org/aspectj);<br>
+            - JBoss AOP (http://www.jboss.org/jbossaop);<br>
+            - Spring AOP (http://www.springframework.org).<br>
+            <br>
+            Фреймворк Spring поддерживает четыре разновидности AOP:
+            - классическое аспектно-ориентированное программирование на основе промежуточных объектов;
+            - аспекты, создаваемые с применением аннотаций @AspectJ;
+            - аспекты на основе POJO;
+            - внедрение аспектов AspectJ (доступно во всех версиях Spring)<br>
+            <br>
+            Указатель AspectJ Описание
+            -args() Ограничивает срез точек сопряжения вызовами методов, чьи аргументы являются экземплярами указанных
+            типов<br>
+            -@args() Ограничивает срез точек сопряжения вызовами методов,чьи аргументы аннотированы указанными типами
+            аннотаций<br>
+            - execution() Соответствует точкам сопряжения, которые являются вызовами методов<br>
+            - this() Ограничивает срез точек сопряжений точками, где ссылка на компонент является ссылкой на
+            прокси-объект указанного типа<br>
+            - target() Ограничивает срез точек сопряжений точками, где целевой объект имеет указанный тип<br>
+            - @target() Ограничивает срез точек сопряжений точками, где класс выполняемого объекта снабжен аннотацией
+            указанного типа<br>
+            - within() Ограничивает срез точек сопряжений точками только внутри указанных типов<br>
+            - @within() Ограничивает срез точек сопряжений точками внутри указанных типов, снабженных указанной
+            аннотацией
+            (в Spring AOP соответствует вызовам методов в указанном типе, отмеченных указанной аннотацией)<br>
+            - @annotation Ограничивает срез точек сопряжений точками, помеченными указанной аннотацией<br>
+            <br>
+            Обратите внимание, что среди поддерживаемых указателей только execution фактически выполняет сопоставление –
+            все остальные
+            используются для ограничения множества совпадений.<br>
+            Определение срезов множества точек сопряжения ст.210<br>
+        <pre>
+            aop:config
+                aop:aspect ref="minstrel"
+                    aop:pointcut id="embark"      любой тип возвр.
+                                  expression="execution(* *.embarkOnQuest(..))"/ -..значит любые аргументы
+                    aop:before pointcut-ref="embark"          метод emb.. любого класса
+                                method="singBeforeQuest"/
+                    aop:after pointcut-ref="embark"
+                               method="singAfterQuest"/
+                /aop:aspect
+            /aop:config</pre>
+        <br>
+        <br>
+        execution(* com.springinaction.springidol.Instrument.play()) and bean(eddie)- (!bean(eddie))<br>
+        Это определение говорит, что совет аспекта должен применяться к вызовам метода Instrument.play() , но только
+        внутри компонента
+        с идентификатором eddie <br>
+        <pre>
+        Объявление аспектов в XML
+        - aop:advisor Определяет объект-советник
+        - aop:after Определяет AOP-совет, выполняемый после вызова метода (независимо от успешности его завершения)
+        - aop:after-returning Определяет AOP-совет, выполняемый после успешного выполнения метода
+        - aop:after-throwing Определяет AOP-совет, выполняемый после возбуждения исключения
+        - aop:around Определяет AOP-совет, выполняемый до и после выполнения метода
+        - aop:aspect Определяет аспект
+        - aop:aspectj-autoproxy Включает поддержку аспектов, управляемых аннотациями, созданными с применением аннотации @AspectJ
+        - aop:before Определяет AOP-совет, выполняемый до выполнения метода
+        - aop:config Элемент верхнего уровня настройки механизма AOP
+        - aop:declare-parents Внедряет в объекты прозрачную реализацию дополнительных интерфейсов
+        - aop:pointcut Определяет срез точек сопряжения</pre>
+        Внутри aop:config можно объявить один или более объектов-советников, аспектов или срезов множества точек сопряжения<br>
+        Однако имеется возможность определять срезы, на которые можно ссылаться из разных аспектов, для чего достаточно поместить элементы aop:pointcut в область действия элемента aop:config<br>
+        <br>
+        Объявление советов, выполняемых и до, и после<br>
+        <pre>
+            public void methodA(ProceedingJoinPoint joinpoint)
+long start = System.currentTimeMillis(); // Перед выступлением
+              joinpoint.proceed(); // Вызов целевого метода
+long end = System.currentTimeMillis(); // После выступления
+
+            aop:around
+                    pointcut-ref="performance2"
+                    method="methodA" />
+            /aop:aspect
+        </pre>
+         <br>
+        Внедрение новых возможностей с помощью аспектов<br>
+        <pre>
+aop:aspect
+     aop:declare-parents -декларируем нового родителя
+        types-matching="com.springinaction.springidol.Performer+" -совместимый тип
+        implement-interface="com.springinaction.springidol.Contestant" -новый интерфейс
+        default-impl="com.springinaction.springidol.GraciousContestant"/ -имплементация интерфейса
+/aop:aspect
+        </pre>
+        <br>
+        Аннотирование аспектов<br>
+        Элемент aop:aspectj-autoproxy создаст в контексте Spring компонент класса AnnotationAwareAspectJAutoProxyCreator и автоматически
+        выполнит проксирование компонентов, имеющих методы, совпадающие с объявлениями точек сопряжения в аннотациях @Pointcut ,
+        которые присутствуют в компонентах, отмеченных аннотацией @Aspect<br>
+        Добовляем бин с аспектом и анатируем класс<br>
+        @Aspect<br>
+        public class AopExmpl {<br>
+        @Pointcut("execution(* *.perform(..))")<br>
+        public void jjj() {   }<br>
+        @Around("jjj()")<br>
+        public void watchPerformance(ProceedingJoinPoint joinpoint) { <br>
+        <br>
+        Передача аргументов аннотированным советам<br>
+        <br>
+        @Aspect <br>
+        public class Magician implements MindReader { <br>
+        @Pointcut("execution(* com.springinaction.springidol."+ "Thinker.thinkOfSomething(String)) && args(thoughts)") <br>
+        public void thinking(String thoughts) {  } <br>
+        @Before("thinking(thoughts)") // Передача параметра в совет <br>
+        public void interceptThoughts(String thoughts) { <br>
+        <br>
+        <b>Внедрение аспектов AspectJ</b><br>
+        Аспекты расширения AspectJ независимы по отношению к Spring.
+        Они могут быть вплетены в любое Java-приложение, включая приложения на основе Spring, но сам фреймворк при этом остается
+        практически непричастен к ним
+        <pre>
+            public aspect JudgeAspect {
+                          public JudgeAspect() {}
+                          pointcut performance() : execution(* perform(..));
+                          after() returning() : performance() { System.out.println(criticismEngine.getCriticism());}
+                 // внедряется
+                 private CriticismEngine criticismEngine;
+                 public void setCriticismEngine(CriticismEngine criticismEngine) {this.criticismEngine = criticismEngine;}
+        </pre>
+        CriticismEngine – это интерфейс, объявляющий метод getCriticism()<br>
+        bean class="com.springinaction.springidol.JudgeAspect" factory-method=”aspectOf”<br>
+            property name="criticismEngine" ref="criticismEngine" /<br>
+       <br>
+    </p>
+        <a href="#top">Назад</a>
+    </div>
+</section>
+</body>
+</html>
