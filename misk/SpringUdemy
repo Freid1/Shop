@@ -1,0 +1,96 @@
+Multiple lifecycle mechanisms configured for the same bean, with different initialization methods, are called as follows:
+1. Methods annotated with @PostConstruct
+2. afterPropertiesSet() as defined by the InitializingBean callback interface
+3. A custom configured init() method
+ 	Destroy methods are called in the same order:
+1. Methods annotated with @PreDestroy
+2. destroy() as defined by the DisposableBean callback interface
+3. A custom configured destroy() method
+
+
+
+For "prototype" scoped beans, Spring does not call the destroy method.  Gasp!
+По дефолту сингелтон
+
+@Autoweired
+@Qualifier is a nice feature, but it is tricky when used with Constructors.
+You have to place the @Qualifier annotation inside of the constructor arguments.
+
+@PropertySource("classpath:sport.properties")
+<context:property-placeholder location="classpath:sport.properties"/>
+@Value("${foo.email}") or value="${foo.email}"
+
+Заполнить массив при создании бина
+private String[] data;
+        @PostConstruct
+    public void setupMyData() {
+        data = new String[5];
+        data[0] = a;
+        data[1] = b;
+        data[2] = c;
+    }
+
+This happens because of Java 9 and higherWhen using Java 9 and higher, javax.annotation has been removed from its default classpath.
+ @PostConstruct or @PreDestroy
+javax.annotation-api-1.2.jar
+
+
+Static resource config web.xml
+<mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>
+Use
+<img src="${pageContext.request.contextPath}/resources/images/spring-logo.png">
+
+@RequestMapping("/processFormVersionTwo")
+public String letsShoutDude(HttpServletRequest request, Model model)
+		String theName = request.getParameter("studentName");
+
+Or
+Html
+Form input Name =”student”
+public String letsShoutDude ( @RequestParam (“student”) String name);
+
+
+Сначала добавляем в объект через модел, затем обрабатываем в форме и получаем заполненный объект через @ModelAttribute
+model.add(“user”, new User())             @ModelAttribute("userForm”)User user)
+
+
+
+
+
+
+When performing Spring MVC validation, the location of the BindingResult parameter is very important. In the method signature,
+ the BindingResult parameter must immediately after the model attribute.
+@RequestMapping("/processForm")
+        public String processForm(
+                @Valid @ModelAttribute("customer") Customer theCustomer,
+                BindingResult theBindingResult) {
+
+if (theBindingResult.hasErrors()) {
+			return "customer-form";
+		}
+		else {
+			return "customer-confirmation";
+		}
+        }
+
+Форма
+Last name (*): <form:input path="lastName" />
+		<form:errors path="lastName" cssClass="error" />
+
+Препроцессор обработки Датабиндера, уберает пробелы при отправке формы.
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+	StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+			dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);}
+
+
+
+
+<bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+             <property name="basenames" value="resources/messages" />
+         </bean>
+
+\messages.properties
+typeMismatch.customer.freePasses=Invalid number
+code + "." + object name + "." + field
