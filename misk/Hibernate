@@ -3,10 +3,14 @@ Mysql
 alter table namedb.nametable auto_increment=3000 -следующее добавление в таблицу начнется с 3000 элемента
 truncate namedb.nametable -ресет таблицы до 1
 
+#######################################################
+
 ALTER TABLE `hb_student_tracker`.`student`  ADD COLUMN `date_of_birth` DATETIME NULL AFTER `last_name`; добавление колонки даты в таблицу
 @Column(name="date_of_birth")
 @Temporal(TemporalType.DATE)
 private Date dateOfBirth;        Date theDateOfBirth = DateUtils.parseDate(theDateOfBirthStr);  Student temoStudent = new Student("Paully", "Doe", "paul@luv.com", theDateOfBirth);
+
+######################################################
 
 SessionFactory factory = new Configuration()
 								.configure("hibernate.cfg.xml")
@@ -27,3 +31,15 @@ session = factory.getCurrentSession();
 			myStudent.setFirstName("Scooby"); не надо делать сэйв
 			session.getTransaction().commit();
 
+###################################################
+
+@OneToOne(cascade=CascadeType.ALL)
+@JoinColumn(name="instructor_detail_id")        ----один к одной foregn key
+private InstructorDetail instructorDetail;
+
+@OneToOne(mappedBy="instructorDetail",
+cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+CascadeType.REFRESH})                           --- друг к другу с возможностью удалить  InstructorDetail не забыть обнулить ссылку
+private Instructor instructor;
+
+####################################################

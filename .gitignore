@@ -2,7 +2,7 @@
 *.class
 
 # H2 db
-*.db
+*.trace.db
 
 # Log file
 *.log
