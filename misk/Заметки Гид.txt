@@ -11,10 +11,9 @@ git remote add origin https://github.com/Freid1/Shop.git
 git push -u origin master
 
 
+git pull origin master
 git add --all
 git commit -m "first commit"
-<<<<<<< HEAD
 git push -u origin master
-=======
-git push -u origin master
->>>>>>> bf4d83a9a07dfb3a57a09e5f10fae603ed63e8d3
+git push -f origin master
+

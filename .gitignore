@@ -1,10 +1,8 @@
-<<<<<<< HEAD
-
-=======
-clone
->>>>>>> bf4d83a9a07dfb3a57a09e5f10fae603ed63e8d3
 # Compiled class file
 *.class
+
+# H2 db
+*.db
 
 # Log file
 *.log
