@@ -38,7 +38,7 @@ public class ControllerMain {
 
     @Autowired
     // @Lazy
-            AuthenticationManager authenticationManager;
+    AuthenticationManager authenticationManager;
 
 
     @GetMapping(value = "/registration")
@@ -98,10 +98,10 @@ public class ControllerMain {
         authGroup.setAuthgroup("USER");
         authGroupRepository.save(authGroup);
 
-       /* AuthGroup authGroup2 = new AuthGroup();
+        AuthGroup authGroup2 = new AuthGroup();
         authGroup2.setUsername(user.getUsername());
         authGroup2.setAuthgroup("ADMIN");
-        authGroupRepository.save(authGroup2);*/
+        authGroupRepository.save(authGroup2);
 
         modelAndView.addObject("message", user.getUsername());
 

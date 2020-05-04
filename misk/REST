@@ -1,0 +1,2 @@
+@JsonIgnoreProperties(ignoreUnknown = true) ставится над классом чтоб игнорировать поля в jsone для которых нет сетеров
+jackson-databind

@@ -1,0 +1,9 @@
+Нужно чтоб был mvnw.cmd в коталоге и зависимость spring-boot-devtools
+./mvnw package  создаются файлы в директории target
+cd target
+java -jar namefile.jar
+чтоб перезапускать
+cd ..
+./mvnw spring-boot:run
+
+

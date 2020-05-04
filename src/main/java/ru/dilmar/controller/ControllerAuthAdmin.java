@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.dilmar.domain.User;
 import ru.dilmar.repository.AuthGroupRepository;
 import ru.dilmar.repository.UsersRepository;
@@ -52,10 +53,10 @@ public class ControllerAuthAdmin {
    @GetMapping("/editdel")
    @PreAuthorize(value = "hasRole('ADMIN')")
    @Transactional
-   public ModelAndView editDelete(ModelAndView modelAndView, @ModelAttribute ("name")String name) {
+   public RedirectView editDelete(ModelAndView modelAndView, @ModelAttribute ("name")String name) {
        authGroupRepository.deleteByUsername(name);
        usersRepository.deleteByUsername(name);
-       modelAndView.setViewName("adminpage");
-      return modelAndView;
+      return new RedirectView("edit");
+      //return new ModelAndView("forward:/redirectedUrl", model);
    }
 }

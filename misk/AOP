@@ -1,0 +1,97 @@
+@EnableAspectJAutoProxy добавить в конфиг файл + зависимость aspectjweaver в бут ненадо
+
+@Aspect
+@Component
+@Order(-40) // Очередность выполнения от -int до +int -40 0 10
+Над классом где описываются поинткаты
+##################################################################################
+@Before – Run before the method execution
+@After – Run after the method returned a result
+@AfterReturning – Run after the method returned a result, intercept the returned result as well.   returning= "result"
+@AfterThrowing – Run after the method throws an exception                                          throwing= "error"
+@Around – Run around the method execution, combine all three advices above.
+##################################################################################
+    @Pointcut("within(ru.dilmar.controller..*)")
+    public void loggingPointcut() {}
+
+    @Before("loggingPointcut()||loggingPointcut2()")
+    public void loggingMethod(JoinPoint joinPoint) { public void loggingMethod(JoinPoint joinPoint) { // позволяет достовать информацию о вызываемом методе
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+
+##################################################################################
+    @Around("execution(* com.mkyong.customer.bo.CustomerBo.addCustomerAround(..))")
+            public void logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+          	System.out.println("Around before is running!");
+      	joinPoint.proceed(); //continue on the intercepted method
+        	System.out.println("Around after is running!");
+            }
+            Можно обрабатывать эксепшины и логирование
+##################################################################################
+            @AfterReturning(pointcut="execution(* com.luv2code.aopdemo.dao.AccountDAO.findAccounts(..))",
+        returning="result")
+    public void afterReturningFindAccountsAdvice( JoinPoint theJoinPoint, List<Account> result) {
+    можно изменить возвращаемый элемент
+    }
+##################################################################################
+Param-pattern
+()-no argument
+(*)-one arguments any type
+(..)-0 or any arguments any type
+
+##################################################################################
+@Pointcut("execution(public String com.baeldung.pointcutadvice.dao.FooDao.findById(Long))")
+@Pointcut("execution(* com.baeldung.pointcutadvice.dao.FooDao.*(..))")
+
+3.2 within
+@Pointcut("within(com.baeldung.pointcutadvice.dao.FooDao)")
+@Pointcut("within(com.baeldung..*)")
+
+3.3 this and target
+public class FooDao implements BarDao {
+    ...
+}
+@Pointcut("target(com.baeldung.pointcutadvice.dao.BarDao)")
+@Pointcut("this(com.baeldung.pointcutadvice.dao.FooDao)")
+
+3.4 args
+@Pointcut("execution(* *..find*(Long))")
+@Pointcut("execution(* *..find*(Long,..))")
+
+3.5 @target
+@Pointcut("@target(org.springframework.stereotype.Repository)")
+
+3.6 @args
+@Pointcut("@args(com.baeldung.pointcutadvice.annotations.Entity)")
+public void methodsAcceptingEntities() {}
+
+@Before("methodsAcceptingEntities()")
+public void logMethodAcceptionEntityAnnotatedBean(JoinPoint jp) {
+    logger.info("Accepting beans with @Entity annotation: " + jp.getArgs()[0]);
+}
+
+3.7 @within
+@Pointcut("@within(org.springframework.stereotype.Repository)")
+Which is equivalent to:
+@Pointcut("within(@org.springframework.stereotype.Repository *)")
+
+3.8 @annotation
+@Pointcut("@annotation(com.baeldung.pointcutadvice.annotations.Loggable)")
+public void loggableMethods() {}
+
+@Before("loggableMethods()")
+public void logMethod(JoinPoint jp) {
+    String methodName = jp.getSignature().getName();
+    logger.info("Executing method: " + methodName);
+}
+4. Combining Pointcut Expressions
+Pointcut expressions can be combined using &&, || and ! operators:
+
+@Pointcut("@target(org.springframework.stereotype.Repository)")
+public void repositoryMethods() {}
+
+@Pointcut("execution(* *..create*(Long,..))")
+public void firstLongParamMethods() {}
+
+@Pointcut("repositoryMethods() && firstLongParamMethods()")
+public void entityCreationMethods() {}
+##################################################################################

@@ -1,3 +1,7 @@
+Основные настройки application.properties
+https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties
+
+
 Multiple lifecycle mechanisms configured for the same bean, with different initialization methods, are called as follows:
 1. Methods annotated with @PostConstruct
 2. afterPropertiesSet() as defined by the InitializingBean callback interface
