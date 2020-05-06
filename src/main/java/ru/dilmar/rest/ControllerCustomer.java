@@ -1,6 +1,7 @@
 package ru.dilmar.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,10 +17,11 @@ public class ControllerCustomer {
     CustomerServise customerServise;
 
     @GetMapping("/customers")
+  //  @PreAuthorize(value = "hasRole('ADMIN')")
     public ModelAndView getCustomers(ModelAndView modelAndView) {
         List<Customer> listCustomers=customerServise.getCustomers();
        modelAndView.addObject("allCustomers",listCustomers);
-       modelAndView.setViewName("editpage");
+       modelAndView.setViewName("admin/editcustomers");
         return modelAndView;
     }
 
@@ -47,9 +49,10 @@ public class ControllerCustomer {
     }
 
     @DeleteMapping("/customers/{customerId}")
-    public String  deleteCustomer(@PathVariable long customerId) {
+    public ModelAndView  deleteCustomer(@PathVariable long customerId, ModelAndView modelAndView) {
         customerServise.deleteCustomer(customerId);
-        return "Delete customer "+customerId;
+        modelAndView.setViewName("/v1/customers");
+        return modelAndView;
     }
 
 }

@@ -8,6 +8,7 @@
 <body>
 <div sec:authorize="isAuthenticated()">    Welcome, <span sec:authentication="name">Username</span></div>
 <p> <a th:href="@{/edit}">Edit users</a></p>
+<p> <a th:href="@{/editcustomers}">Edit users2</a></p>
 <p><a th:href="@{/index}">Main page</a> </p>
 <p><a href="/webapps/index.html">Books</a></p>
 <p><a href="/logout">Logout</a></p>
