@@ -10,9 +10,9 @@ import javax.validation.constraints.Size;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(unique = true, nullable = false)
+  //  @Column(unique = true, nullable = false)
     @NotBlank
     @Pattern(regexp = "^[a-zA-Zа-яА-Я]{3,20}")
     @Size(min = 1, max = 25)
@@ -20,11 +20,11 @@ public class Customer {
     private String name;
 
 
-  /*  @NotBlank
-    @Size(min = 1, max = 50)*/
+    @NotBlank
+    @Size(min = 1, max = 50)
     private String address;
 
-    @Column(unique = true, nullable = false)
+
     @NotBlank
     @Email(regexp = "[a-zA-Z1-9\\-\\._]+@[a-z1-9]+(.[a-z1-9]+){1,}")
     //@UserCheckInDb(nameField = "email", message = "Пользователь с такой электронной почтой уже есть")
@@ -43,11 +43,11 @@ public class Customer {
 
     public Customer() {}
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

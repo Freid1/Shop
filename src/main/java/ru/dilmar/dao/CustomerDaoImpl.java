@@ -11,25 +11,27 @@ import java.util.List;
 public class CustomerDaoImpl implements CustomerDao {
 
     @Autowired
-    CustomerCrudRepository customerCrudRepository;
+    CustomerJpaRepository customerRepository;
 
     @Override
     public List<Customer> getCustomers() {
-        return customerCrudRepository.findAll();
+
+        return customerRepository.findAll();
+
     }
 
     @Override
     public void saveCustomer(Customer theCustomer) {
-        customerCrudRepository.save(theCustomer);
+        customerRepository.save(theCustomer);
     }
 
     @Override
-    public Customer getCustomer(long theId) {
-        return customerCrudRepository.findById(theId);
+    public Customer getCustomer(Long theId) {
+        return customerRepository.getOne(theId);
     }
 
     @Override
-    public void deleteCustomer(long theId) {
-        customerCrudRepository.deleteById(theId);
+    public void deleteCustomer(Long theId) {
+        customerRepository.deleteById(theId);
     }
 }

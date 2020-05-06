@@ -6,3 +6,5 @@
 
 <h2 th:text="#{thead.id}">
 
+http://mybootstrap.ru/
+https://getbootstrap.com/
