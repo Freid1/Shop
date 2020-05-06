@@ -5,6 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 public class Customer {
@@ -35,6 +36,9 @@ public class Customer {
     @Pattern(regexp = "\\+?\\d+([\\(\\s\\-]?\\d+[\\)\\s\\-]?[\\d\\s\\-]+)?")
     //@UserCheckInDb(nameField = "phoneNumder", message = "Пользователь с таким номером уже есть")
     private String phoneNumber;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateRegistrationCustomer;
 
     private String password;
 
@@ -99,6 +103,14 @@ public class Customer {
         this.enabled = enabled;
     }
 
+    public Date getDateRegistrationCustomer() {
+        return dateRegistrationCustomer;
+    }
+
+    public void setDateRegistrationCustomer(Date dateRegistrationCustomer) {
+        this.dateRegistrationCustomer = dateRegistrationCustomer;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -107,6 +119,7 @@ public class Customer {
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", dateRegistrationCustomer=" + dateRegistrationCustomer +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 '}';

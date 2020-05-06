@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <head>
+        <title>List Customers</title>
+
+        <!-- reference our style sheet -->
+
+        <link type="text/css" rel="stylesheet" href="../static/cssImg/admin/style.css"
+              th:href="@{/cssImg/admin/style.css}"/>
+
+    </head>
+
+<body>
+
+<div id="wrapper">
+    <div id="header">
+        <h2>Customer Relationship Manager</h2>
+    </div>
+</div>
+
+<div id="container">
+
+    <div id="content">
+
+        <!--  add our html table here -->
+
+        <table>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+            </tr>
+
+            <!-- loop over and print our customers -->
+
+            <tr th:each="user : ${users}">
+
+                <td th:text="${user.id}">ID</td>
+                <td th:text="${user.username}">Name</td>
+                <td>
+                    <form id="del" action="#" th:action="@{/editdel}" method="GET">
+                        <input type="hidden" th:value="${user.username}" name="name"/>
+                        <button type="submit" form="del">Delete</button>
+                    </form>
+
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-package ru.dilmar.restTest;
+package ru.dilmar.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -19,25 +19,29 @@ import ru.dilmar.Start;
 
 @Aspect
 @Component
-@Order(-40) // Очередность выполнения от -int до +int -40 0 10
+@Order(0) // Очередность выполнения от -int до +int -40 0 10
 public class LoggingAop {
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
+
     @Pointcut("within(ru.dilmar..*)")
     public void loggingPointcut() {
     }
+
     @Pointcut("execution(* ru.dilmar.Start.*(..))") //метод мэен вызывается раньше чем запустится АОП
     public void loggingPointcut2() {
     }
+
     @Before("loggingPointcut()||loggingPointcut2()")
     public void loggingMethodBefore(JoinPoint joinPoint) {
         String theMethod = joinPoint.getSignature().toShortString();
-       logger.info("=====>> in @Before: calling method: " + theMethod);
+        logger.info("=====>> in @Before: calling method: " + theMethod);
       /*  Object[] args = joinPoint.getArgs();
         for (Object tempArg : args) {
             logger.info("=====>> argument: " + tempArg);
         }*/
 
     }
+
     @After("loggingPointcut()||loggingPointcut2()")
     public void loggingMethodAfter(JoinPoint joinPoint) {
         String theMethod = joinPoint.getSignature().toShortString();

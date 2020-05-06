@@ -3,7 +3,6 @@ package ru.dilmar.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import ru.dilmar.entity.Customer;
 import ru.dilmar.service.CustomerServise;
 
@@ -16,11 +15,12 @@ public class ControllerCustomer {
     CustomerServise customerServise;
 
     @GetMapping("/customers")
-    public ModelAndView getCustomers(ModelAndView modelAndView) {
-        List<Customer> listCustomers=customerServise.getCustomers();
-       modelAndView.addObject("allCustomers",listCustomers);
-       modelAndView.setViewName("editpage");
-        return modelAndView;
+    public List<Customer> getCustomers() {
+        List<Customer> list=customerServise.getCustomers();
+        System.out.println(list);
+        return list;
+       // return customerServise.getCustomers();
+
     }
 
     @GetMapping("/customers/{customerId}")

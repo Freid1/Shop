@@ -1,4 +1,4 @@
-package ru.dilmar.restTest;
+package ru.dilmar.rest;
 
 public class ControllerRestException extends RuntimeException {
     public ControllerRestException() {
