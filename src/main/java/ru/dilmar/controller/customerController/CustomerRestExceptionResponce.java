@@ -1,16 +1,16 @@
-package ru.dilmar.rest;
+package ru.dilmar.controller.customerController;
 
-public class ControllerRestExceptionResponce {
+public class CustomerRestExceptionResponce {
 
 
         private int status;
         private String message;
         private long timeStamp;
 
-    public ControllerRestExceptionResponce() {
+    public CustomerRestExceptionResponce() {
     }
 
-    public ControllerRestExceptionResponce(int status, String message, long timeStamp) {
+    public CustomerRestExceptionResponce(int status, String message, long timeStamp) {
         this.status = status;
         this.message = message;
         this.timeStamp = timeStamp;

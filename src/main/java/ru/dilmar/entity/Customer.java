@@ -1,5 +1,7 @@
 package ru.dilmar.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -37,7 +39,9 @@ public class Customer {
     //@UserCheckInDb(nameField = "phoneNumder", message = "Пользователь с таким номером уже есть")
     private String phoneNumber;
 
+
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateRegistrationCustomer;
 
     private String password;

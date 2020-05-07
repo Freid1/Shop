@@ -1,4 +1,4 @@
-package ru.dilmar.rest;
+package ru.dilmar.controller.customerController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

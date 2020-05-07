@@ -32,6 +32,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public void deleteCustomer(Long theId) {
+
         customerRepository.deleteById(theId);
     }
 }
