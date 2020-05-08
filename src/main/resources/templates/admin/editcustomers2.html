@@ -63,31 +63,31 @@
 
             <tr>
                 <th th:text="#{page.editcustomer.name}">Name</th>
-                <td><input type="text" th:field="*{name}"></td>
+                <td><input type="text" name="name" th:field="*{name}"></td>
                 <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</td>
             </tr>
 
             <tr>
                 <th th:text="#{page.editcustomer.address}">Address</th>
-                <td><input type="text" th:field="*{address}"></td>
+                <td><input type="text" name="address" th:field="*{address}"></td>
                 <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Error</td>
             </tr>
 
             <tr>
                 <th th:text="#{page.editcustomer.email}">E-mail</th>
-                <td><input type="text"  th:field="*{email}"></td>
+                <td><input type="text" name="email" th:field="*{email}"></td>
                 <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</td>
             </tr>
 
             <tr>
                 <th th:text="#{page.editcustomer.phoneNumber}">Phone number</th>
-                <td><input type="text" th:field="*{phoneNumber}"></td>
+                <td><input type="text" name="phoneNumber" th:field="*{phoneNumber}"></td>
                 <td th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Error</td>
             </tr>
 
             <tr>
                 <th th:text="#{page.editcustomer.dateRegistrationCustomer}">Date registration</th>
-                <td><input type="date"
+                <td><input type="date" name="dateRegistrationCustomer"
                            th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/></td>
                 <td th:if="${#fields.hasErrors('dateRegistrationCustomer')}"
                     th:errors="*{dateRegistrationCustomer}">
@@ -97,13 +97,13 @@
 
             <tr>
                 <th th:text="#{page.editcustomer.enabled}">Access work</th>
-                <td><input type="text" th:field="*{enabled}"></td>
+                <td><input type="text" name="enabled" th:field="*{enabled}"></td>
                 <td th:if="${#fields.hasErrors('enabled')}" th:errors="*{enabled}">Error</td>
             </tr>
 
             <tr>
                 <th th:text="#{page.editcustomer.password}">Password</th>
-                <td><input type="text"  th:field="*{password}"></td>
+                <td><input type="text" name="password" th:field="*{password}"></td>
                 <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</td>
             </tr>
 
@@ -114,7 +114,7 @@
         </form>
 
     </table>
-    <p th:text="${message}"></p>
+
 </div>
 
 </body>
