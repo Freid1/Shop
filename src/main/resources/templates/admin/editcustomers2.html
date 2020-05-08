@@ -4,16 +4,10 @@
 <head>
     <head>
         <title>Edit Customers</title>
-
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-              crossorigin="anonymous">
-
-        <link type="text/css" rel="stylesheet" href="../../static/cssImg/admin/style.css"
-              th:href="@{/cssImg/admin/style.css}"/>
-        <link type="text/css" rel="stylesheet" href="../../static/cssImg/admin/add-customer-style.css"
-              th:href="@{/cssImg/admin/add-customer-style.css}"/>
-
+               <link type="text/css" rel="stylesheet" href="../../static/cssImg/admin/style.css"
+                     th:href="@{/cssImg/admin/style.css}"/>
+               <link type="text/css" rel="stylesheet" href="../../static/cssImg/admin/add-customer-style.css"
+                     th:href="@{/cssImg/admin/add-customer-style.css}"/>
     </head>
 
 <body>
@@ -28,7 +22,7 @@
 
     <div id="content">
 
-        <table class="table table-bordered table-striped">
+        <table>
             <tr>
                 <th th:text="#{page.editcustomer.id}">Id</th>
                 <th th:text="#{page.editcustomer.name}">Name</th>
@@ -69,31 +63,31 @@
 
             <tr>
                 <th th:text="#{page.editcustomer.name}">Name</th>
-                <td><input type="text" th:field="*{name}"></td>
+                <td><input type="text" name="name" th:field="*{name}"></td>
                 <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</td>
             </tr>
 
             <tr>
                 <th th:text="#{page.editcustomer.address}">Address</th>
-                <td><input type="text" th:field="*{address}"></td>
+                <td><input type="text" name="address" th:field="*{address}"></td>
                 <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Error</td>
             </tr>
 
             <tr>
                 <th th:text="#{page.editcustomer.email}">E-mail</th>
-                <td><input type="text" th:field="*{email}"></td>
+                <td><input type="text" name="email" th:field="*{email}"></td>
                 <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</td>
             </tr>
 
             <tr>
                 <th th:text="#{page.editcustomer.phoneNumber}">Phone number</th>
-                <td><input type="text" th:field="*{phoneNumber}"></td>
+                <td><input type="text" name="phoneNumber" th:field="*{phoneNumber}"></td>
                 <td th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Error</td>
             </tr>
 
             <tr>
                 <th th:text="#{page.editcustomer.dateRegistrationCustomer}">Date registration</th>
-                <td><input type="date"
+                <td><input type="date" name="dateRegistrationCustomer"
                            th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/></td>
                 <td th:if="${#fields.hasErrors('dateRegistrationCustomer')}"
                     th:errors="*{dateRegistrationCustomer}">
@@ -103,14 +97,13 @@
 
             <tr>
                 <th th:text="#{page.editcustomer.enabled}">Access work</th>
-                <td><input type="text" th:field="*{enabled}"></td>
+                <td><input type="text" name="enabled" th:field="*{enabled}"></td>
                 <td th:if="${#fields.hasErrors('enabled')}" th:errors="*{enabled}">Error</td>
             </tr>
 
-
             <tr>
                 <th th:text="#{page.editcustomer.password}">Password</th>
-                <td><input type="text" th:field="*{password}"></td>
+                <td><input type="text" name="password" th:field="*{password}"></td>
                 <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</td>
             </tr>
 
@@ -121,18 +114,8 @@
         </form>
 
     </table>
-    <p th:text="${message}"></p>
 
 </div>
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
 </body>
 </html>

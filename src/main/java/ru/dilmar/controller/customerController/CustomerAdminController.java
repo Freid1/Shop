@@ -23,6 +23,7 @@ public class CustomerAdminController{
     public ModelAndView getCustomers() {
         ModelAndView modelAndView =new ModelAndView();
         Customer customer=new Customer();
+        customer.setEnabled(true);
         List<Customer> listCustomers = customerServise.getCustomers();
         modelAndView.addObject("allCustomers", listCustomers);
         modelAndView.addObject("customer", customer);
@@ -47,7 +48,13 @@ public class CustomerAdminController{
     @PreAuthorize(value = "hasRole('ADMIN')")
     public ModelAndView postCustomer(@Valid @ModelAttribute("customer") Customer theCustomer, BindingResult theBindingResult) {
         ModelAndView modelAndView =new ModelAndView();
-        System.out.println(theCustomer);
+
+        if (theBindingResult.hasErrors()) {
+            modelAndView.setViewName("admin/editcustomers");
+            modelAndView.addObject("message","invalid");
+            return modelAndView;
+        }
+
         customerServise.saveCustomer(theCustomer);
         modelAndView.setViewName("redirect:/admin/customers");
         return modelAndView;
