@@ -8,5 +8,5 @@ import ru.dilmar.entity.Customer;
 //@RepositoryRestResource(path="/customers")
 public interface CustomerJpaRepository extends JpaRepository<Customer,Long> {
     Customer findByName(String customerName);
-    Customer findByUsernameOrEmailOrPhoneNumber(String name,String email,String phoneNumber);
+    Customer findByNameOrEmailOrPhoneNumber(String name,String email,String phoneNumber);
 }

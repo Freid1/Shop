@@ -37,8 +37,8 @@ public class CustomerDaoImpl implements CustomerDao {
     public void deleteCustomer(Long theId) {              customerRepository.deleteById(theId);    }
 
     @Override
-    public Customer findByUsernameOrEmailOrPhoneNumber(String name, String email, String phoneNumber) {
-        return customerRepository.findByUsernameOrEmailOrPhoneNumber(name,email,phoneNumber);
+    public Customer findByNameOrEmailOrPhoneNumber(String name, String email, String phoneNumber) {
+        return customerRepository.findByNameOrEmailOrPhoneNumber(name,email,phoneNumber);
     }
 
 

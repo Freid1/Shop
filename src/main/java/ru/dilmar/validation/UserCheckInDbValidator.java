@@ -1,16 +1,11 @@
 package ru.dilmar.validation;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.dilmar.domain.User;
-import ru.dilmar.repository.UsersRepository;
+
+import ru.dilmar.service.CustomerServise;
 
 
-import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
-import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -21,7 +16,7 @@ public class UserCheckInDbValidator implements ConstraintValidator<UserCheckInDb
 
 
     @Autowired
-    private UsersRepository usersRepository;
+    private CustomerServise customerServise;
 
     private String nameField;
 
@@ -39,11 +34,11 @@ public class UserCheckInDbValidator implements ConstraintValidator<UserCheckInDb
 
    /*     User oldUser;
         if (nameField.equals("username")) {
-            oldUser = usersRepository.findByUsername(theCode);
+            oldUser = customerServise.findByUsername(theCode);
         } else if (nameField.equals("email")) {
-            oldUser = usersRepository.findByEmail(theCode);
+            oldUser = customerServise.findByEmail(theCode);
         } else if (nameField.equals("phoneNumber")) {
-            oldUser = usersRepository.findByPhoneNumber(theCode);
+            oldUser = customerServise.findByPhoneNumber(theCode);
         } else {
             oldUser = null;
         }
@@ -53,7 +48,7 @@ public class UserCheckInDbValidator implements ConstraintValidator<UserCheckInDb
             return false;
         }*/
 
-       return usersRepository.findByUsernameOrEmailOrPhoneNumber(theCode, theCode, theCode)==null;
+       return customerServise.findByNameOrEmailOrPhoneNumber(theCode, theCode, theCode)==null;
     }
 }
 

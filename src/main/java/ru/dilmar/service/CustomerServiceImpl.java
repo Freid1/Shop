@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerServise {
 
     @Override
     @Transactional
-    public Customer findByUsernameOrEmailOrPhoneNumber(String name, String email, String phoneNumber) {
-        return customerDao.findByUsernameOrEmailOrPhoneNumber(name,email,phoneNumber);
+    public Customer findByNameOrEmailOrPhoneNumber(String name, String email, String phoneNumber) {
+        return customerDao.findByNameOrEmailOrPhoneNumber(name,email,phoneNumber);
     }
 }

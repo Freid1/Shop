@@ -9,10 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.dilmar.configurSecurety.AdapterCustomerDetails;
 import ru.dilmar.configurSecurety.AdapterCustomerService;
@@ -27,6 +24,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Collections;
 
+@RestController
 @RequestMapping("/customer")
 public class RegistrationAndLoginCustomer {
     @Autowired
@@ -70,7 +68,7 @@ public class RegistrationAndLoginCustomer {
             return modelAndView;
         }
 
-        Customer oldCustomer = customerServise.findByUsernameOrEmailOrPhoneNumber(customer.getName(), customer.getEmail(), customer.getPhoneNumber());
+        Customer oldCustomer = customerServise.findByNameOrEmailOrPhoneNumber(customer.getName(), customer.getEmail(), customer.getPhoneNumber());
         if (oldCustomer != null) {
             modelAndView.setViewName("registration");
             if (oldCustomer.getName().equals(customer.getName())) {
@@ -114,16 +112,21 @@ public class RegistrationAndLoginCustomer {
         return modelAndView;
     }
 
-  /*  @GetMapping(value = "/login")
+    @GetMapping(value = "/login")
     public ModelAndView login(ModelAndView modelAndView, Principal principal) {
         if (principal != null) {
             modelAndView.setViewName("index");
             modelAndView.addObject("message", "Сначало разлогинтесь чтоб войти под другим именем");
             return modelAndView;
         }
-        modelAndView.setViewName("login");
+        modelAndView.setViewName("customer/login");
         return modelAndView;
     }
-*/
+
+    @GetMapping(value = "/error")
+    public ModelAndView error(ModelAndView modelAndView) {
+         modelAndView.setViewName("error");
+        return modelAndView;
+    }
 
 }

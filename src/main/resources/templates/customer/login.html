@@ -17,10 +17,10 @@
 </head>
 <body>
 
-<form action="#" th:action="@{/login}" th:object="${user}" method="post" class="login">
+<form action="#" th:action="@{/customer/login}" th:object="${customer}" method="post" class="login">
     <p>
         <label for="login" th:text="#{page.login.login}+':'">Логин:</label>
-        <input type="text" name="login" id="login" th:name="*{'username'}" th:placeholder="#{page.login.login.placeholder}" placeholder="Enter your name">
+        <input type="text" name="login" id="login" th:name="*{'name'}" th:placeholder="#{page.login.login.placeholder}" placeholder="Enter your name">
     </p>
 
     <p>
