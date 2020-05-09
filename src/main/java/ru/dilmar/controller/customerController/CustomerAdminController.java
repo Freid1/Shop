@@ -19,7 +19,7 @@ public class CustomerAdminController{
     CustomerServise customerServise;
 
     @GetMapping("/customers")
-     @PreAuthorize(value = "hasRole('ADMIN')")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     public ModelAndView getCustomers() {
         ModelAndView modelAndView =new ModelAndView();
         Customer customer=new Customer();
@@ -51,7 +51,6 @@ public class CustomerAdminController{
 
         if (theBindingResult.hasErrors()) {
             modelAndView.setViewName("admin/editcustomers");
-            modelAndView.addObject("message","invalid");
             return modelAndView;
         }
 

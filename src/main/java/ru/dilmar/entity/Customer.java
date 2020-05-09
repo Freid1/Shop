@@ -15,9 +15,9 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-  //  @Column(unique = true, nullable = false)
+    //  @Column(unique = true, nullable = false)
     @NotBlank
-    @Pattern(regexp = "^[a-zA-Zа-яА-Я]{3,20}")
+    // @Pattern(regexp = "^[a-zA-Zа-яА-Я/S]{3,20}")
     @Size(min = 1, max = 25)
     //@UserCheckInDb(nameField = "username", message = "Пользователь с таким именнем уже есть")
     private String name;
@@ -35,7 +35,7 @@ public class Customer {
 
     @Column(unique = true, nullable = false)
     @NotBlank
-    @Pattern(regexp = "\\+?\\d+([\\(\\s\\-]?\\d+[\\)\\s\\-]?[\\d\\s\\-]+)?")
+    //@Pattern(regexp = "\\+?\\d+([\\(\\s\\-]?\\d+[\\)\\s\\-]?[\\d\\s\\-]+)?")
     //@UserCheckInDb(nameField = "phoneNumder", message = "Пользователь с таким номером уже есть")
     private String phoneNumber;
 
@@ -49,7 +49,8 @@ public class Customer {
     private boolean enabled;
 
 
-    public Customer() {}
+    public Customer() {
+    }
 
     public Long getId() {
         return id;

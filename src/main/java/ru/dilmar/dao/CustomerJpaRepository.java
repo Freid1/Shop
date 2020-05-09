@@ -7,4 +7,5 @@ import ru.dilmar.entity.Customer;
 
 //@RepositoryRestResource(path="/customers")
 public interface CustomerJpaRepository extends JpaRepository<Customer,Long> {
+    Customer findByName(String customerName);
 }

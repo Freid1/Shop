@@ -11,5 +11,7 @@ public interface CustomerServise {
 
     Customer getCustomer(long theId);
 
+    Customer getCustomer(String theCustomerName);
+
     void deleteCustomer(long theId);
 }

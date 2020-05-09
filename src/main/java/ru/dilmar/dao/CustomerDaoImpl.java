@@ -15,19 +15,22 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public List<Customer> getCustomers() {
-
         return customerRepository.findAll();
-
-    }
-
-    @Override
-    public void saveCustomer(Customer theCustomer) {
-        customerRepository.save(theCustomer);
     }
 
     @Override
     public Customer getCustomer(Long theId) {
         return customerRepository.getOne(theId);
+    }
+
+    @Override
+    public Customer getCustomer(String theCustomerName) {
+        return customerRepository.findByName(theCustomerName);
+    }
+
+    @Override
+    public void saveCustomer(Customer theCustomer) {
+        customerRepository.save(theCustomer);
     }
 
     @Override

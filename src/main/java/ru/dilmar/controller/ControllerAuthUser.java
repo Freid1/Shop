@@ -12,6 +12,8 @@ import java.util.Properties;
 @RestController
 public class ControllerAuthUser {
 
+
+
     @GetMapping("/userpage")
     @PreAuthorize(value = "hasRole('USER')")
     public ModelAndView registration(ModelAndView modelAndView) {

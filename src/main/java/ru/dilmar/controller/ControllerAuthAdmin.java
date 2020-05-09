@@ -44,7 +44,7 @@ public class ControllerAuthAdmin {
         modelAndView.setViewName("editpage");
         System.out.println(name);
         authGroupRepository.deleteByUsername(name);
-        usersRepository.deleteByUsername(name);
+        customerServise.deleteByUsername(name);
         return modelAndView;
     }*/
 
