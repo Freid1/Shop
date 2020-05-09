@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import ru.dilmar.configurSecurety.AdapterUserDetails;
+import org.springframework.stereotype.Service;
 import ru.dilmar.entity.AuthGroup;
 import ru.dilmar.entity.Customer;
 import ru.dilmar.service.AuthGroupServise;
@@ -12,8 +12,8 @@ import ru.dilmar.service.CustomerServise;
 
 import java.util.List;
 
-//@Service
-public class AdapterUserService implements UserDetailsService {
+@Service
+public class AdapterCustomerService implements UserDetailsService {
 
     @Autowired
     CustomerServise customerServise;
@@ -28,6 +28,6 @@ public class AdapterUserService implements UserDetailsService {
         }
         List<AuthGroup> authGroupList=authGroupServise.getListAuthGroupByName(s);
 
-        return new AdapterUserDetails(customer,authGroupList);
+        return new AdapterCustomerDetails(customer,authGroupList);
     }
 }

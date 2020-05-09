@@ -14,4 +14,6 @@ public interface CustomerDao {
     Customer getCustomer(String theCustomerName);
 
     void deleteCustomer(Long theId);
+
+    Customer findByUsernameOrEmailOrPhoneNumber(String name,String email,String phoneNumber);
 }

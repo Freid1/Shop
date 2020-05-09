@@ -43,4 +43,10 @@ public class CustomerServiceImpl implements CustomerServise {
     public void deleteCustomer(long theId) {
         customerDao.deleteCustomer(theId);
     }
+
+    @Override
+    @Transactional
+    public Customer findByUsernameOrEmailOrPhoneNumber(String name, String email, String phoneNumber) {
+        return customerDao.findByUsernameOrEmailOrPhoneNumber(name,email,phoneNumber);
+    }
 }

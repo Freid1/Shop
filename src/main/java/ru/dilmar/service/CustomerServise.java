@@ -14,4 +14,6 @@ public interface CustomerServise {
     Customer getCustomer(String theCustomerName);
 
     void deleteCustomer(long theId);
+
+    Customer findByUsernameOrEmailOrPhoneNumber(String name,String email,String phoneNumber);
 }

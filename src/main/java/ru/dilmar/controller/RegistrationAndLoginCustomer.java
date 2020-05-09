@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import ru.dilmar.domain.AdapterUserService;
-import ru.dilmar.domain.AuthGroup;
-import ru.dilmar.domain.User;
+import ru.dilmar.configurSecurety.AdapterCustomerDetails;
+import ru.dilmar.configurSecurety.AdapterCustomerService;
+import ru.dilmar.entity.AuthGroup;
 import ru.dilmar.entity.Customer;
-import ru.dilmar.repository.AuthGroupRepository;
+import ru.dilmar.service.AuthGroupServise;
 import ru.dilmar.service.CustomerServise;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -31,10 +32,10 @@ public class RegistrationAndLoginCustomer {
     @Autowired
     CustomerServise customerServise;
     @Autowired
-    AuthGroupRepository authGroupRepository;
+    AuthGroupServise authGroupServise;
 
     @Autowired
-    AdapterUserService adapterUserService;
+    AdapterCustomerService adapterCustomerService;
 
     @Autowired
     // @Lazy
@@ -45,16 +46,16 @@ public class RegistrationAndLoginCustomer {
     public ModelAndView registration(ModelAndView modelAndView, Principal principal) {
         if (principal != null) {
             modelAndView.setViewName("index");
-            modelAndView.addObject("message", "Сначало разлогинтесь чтоб зарегистрироваться");
+            modelAndView.addObject("message", "Сначало разлогинтесь чтоб заново зарегистрироваться");
             return modelAndView;
         }
         modelAndView.addObject("customerForm", new Customer());
-        modelAndView.setViewName("registration");
+        modelAndView.setViewName("customer/registration");
         return modelAndView;
     }
 
     @PostMapping(value = "/registration")
-    public ModelAndView registrationPost(@Valid @ModelAttribute("userForm") User user, BindingResult theBindingResult, HttpServletRequest request, Principal principal) {
+    public ModelAndView registrationPost(@Valid @ModelAttribute("customerForm") Customer customer, BindingResult theBindingResult, HttpServletRequest request, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         if (principal != null) {
             modelAndView.setViewName("index");
@@ -69,51 +70,51 @@ public class RegistrationAndLoginCustomer {
             return modelAndView;
         }
 
-        User userOld = customerServise.findByUsernameOrEmailOrPhoneNumber(user.getUsername(), user.getEmail(), user.getPhoneNumber());
-        if (userOld != null) {
+        Customer oldCustomer = customerServise.findByUsernameOrEmailOrPhoneNumber(customer.getName(), customer.getEmail(), customer.getPhoneNumber());
+        if (oldCustomer != null) {
             modelAndView.setViewName("registration");
-            if (userOld.getUsername().equals(user.getUsername())) {
+            if (oldCustomer.getName().equals(customer.getName())) {
                 modelAndView.addObject("message", "Пользователь с таким именем существует");
-            } else if (userOld.getEmail().equals(user.getEmail())) {
+            } else if (oldCustomer.getEmail().equals(customer.getEmail())) {
                 modelAndView.addObject("message", "Пользователь с такиой почтой существует");
             } else {
                 modelAndView.addObject("message", "Пользователь с таким телефонным номером существует");
             }
             return modelAndView;
         }
-        if (user.getPassword().length() < 5 || user.getPassword() == null) {
+        if (customer.getPassword().length() < 1 || customer.getPassword() == null) {
             modelAndView.setViewName("registration");
             modelAndView.addObject("message", "Пароль должен быть больше 5 и меньше 20 символов");
             return modelAndView;
         }
-        String password = user.getPassword();
-        String encode = new BCryptPasswordEncoder(11).encode(user.getPassword());
-        user.setPassword(encode);
-        user.setEnabled(true);
-        customerServise.save(user);
+        String password = customer.getPassword();
+        String encode = new BCryptPasswordEncoder(11).encode(password);
+        customer.setPassword(encode);
+        customer.setEnabled(true);
+        customerServise.saveCustomer(customer);
         AuthGroup authGroup = new AuthGroup();
-        authGroup.setUsername(user.getUsername());
+        authGroup.setName(customer.getName());
         authGroup.setAuthgroup("USER");
-        authGroupRepository.save(authGroup);
+        authGroupServise.saveAuthGroup(authGroup);
 
         AuthGroup authGroup2 = new AuthGroup();
-        authGroup2.setUsername(user.getUsername());
+        authGroup2.setName(customer.getName());
         authGroup2.setAuthgroup("ADMIN");
-        authGroupRepository.save(authGroup2);
+        authGroupServise.saveAuthGroup(authGroup2);
 
-        modelAndView.addObject("message", user.getUsername());
+        modelAndView.addObject("messageNameCustomer", customer.getName());
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(user.getUsername(), password, Collections.singleton(new SimpleGrantedAuthority("USER")));
+                new UsernamePasswordAuthenticationToken(customer.getName(), password, Collections.singleton(new SimpleGrantedAuthority("USER")));
         usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetails(request));
         Authentication authenticatedUser = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
 
-        modelAndView.setViewName("login-success");
+        modelAndView.setViewName("index");
         return modelAndView;
     }
 
-    @GetMapping(value = "/login")
+  /*  @GetMapping(value = "/login")
     public ModelAndView login(ModelAndView modelAndView, Principal principal) {
         if (principal != null) {
             modelAndView.setViewName("index");
@@ -123,6 +124,6 @@ public class RegistrationAndLoginCustomer {
         modelAndView.setViewName("login");
         return modelAndView;
     }
-
+*/
 
 }

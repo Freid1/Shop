@@ -8,12 +8,12 @@ import ru.dilmar.entity.Customer;
 
 import java.util.*;
 
-public class AdapterUserDetails implements UserDetails{
+public class AdapterCustomerDetails implements UserDetails{
 
     Customer customer;
     List<AuthGroup> authGroupList;
 
-    public AdapterUserDetails(Customer customer, List<AuthGroup> authGroupList) {
+    public AdapterCustomerDetails(Customer customer, List<AuthGroup> authGroupList) {
         super();
         this.customer = customer;
         this.authGroupList=authGroupList;
